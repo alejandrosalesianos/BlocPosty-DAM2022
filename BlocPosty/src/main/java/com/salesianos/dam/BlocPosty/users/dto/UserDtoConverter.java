@@ -1,8 +1,8 @@
-package users.dto;
+package com.salesianos.dam.BlocPosty.users.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import users.model.UserEntity;
+import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 
 @Component
 @RequiredArgsConstructor

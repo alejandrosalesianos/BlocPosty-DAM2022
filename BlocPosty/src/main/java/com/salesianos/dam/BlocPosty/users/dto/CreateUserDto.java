@@ -1,7 +1,8 @@
-package users.dto;
+package com.salesianos.dam.BlocPosty.users.dto;
 
+import com.salesianos.dam.BlocPosty.users.model.UserType;
 import lombok.*;
-import users.model.UserProfile;
+import com.salesianos.dam.BlocPosty.users.model.UserProfile;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +17,8 @@ public class CreateUserDto {
     private String telefono;
 
     private UserProfile perfil;
+
+    private UserType permisos;
 
     private String password;
 

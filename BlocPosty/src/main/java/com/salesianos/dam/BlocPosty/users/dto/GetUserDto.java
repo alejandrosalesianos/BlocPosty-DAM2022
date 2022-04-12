@@ -1,4 +1,4 @@
-package users.dto;
+package com.salesianos.dam.BlocPosty.users.dto;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package users.model;
+package com.salesianos.dam.BlocPosty.users.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
