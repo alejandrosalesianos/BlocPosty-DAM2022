@@ -34,7 +34,7 @@ public class AuthenticationController {
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginDto.getEmail(),
+                        loginDto.getUsername(),
                         loginDto.getPassword()
                 )
         );
@@ -52,6 +52,7 @@ public class AuthenticationController {
                 .email(user.getEmail())
                 .avatar(user.getFotoPerfil())
                 .perfil(user.getPerfil().name())
+                .role(user.getRol().name())
                 .token(jwt)
                 .build();
     }

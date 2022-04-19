@@ -24,17 +24,7 @@ public class UserController {
     private final UserDtoConverter dtoConverter;
 
     @PostMapping("/")
-    public ResponseEntity<GetUserDto> newUser (/*@RequestParam("telefono") String telefono, @RequestParam("nick") String username, @RequestParam("perfil") UserProfile perfil, @RequestParam("permisos") UserType permisos, @RequestParam("password") String password, @RequestParam("password2") String password2, @RequestParam("email") String email*/@RequestPart("user") CreateUserDto createUserDto, @RequestPart("file") MultipartFile file) throws IOException {
-
-        /*CreateUserDto createUserDto = CreateUserDto.builder()
-                .username(username)
-                .email(email)
-                .telefono(telefono)
-                .perfil(perfil)
-                .permisos(permisos)
-                .password(password)
-                .password2(password2)
-                .build();*/
+    public ResponseEntity<GetUserDto> newUser (@RequestPart("user") CreateUserDto createUserDto, @RequestPart("file") MultipartFile file) throws IOException {
 
         UserEntity user = userEntityService.saveUser(createUserDto,file);
         GetUserDto getUserDto = dtoConverter.UserEntityToGetUserDto(user);
