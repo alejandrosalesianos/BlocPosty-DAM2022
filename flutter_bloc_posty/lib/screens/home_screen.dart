@@ -16,17 +16,6 @@ class _HomePageState extends State<HomePage> {
       key: _drawerKey,
       backgroundColor: bgColor,
       body: getBody(),
-      bottomSheet: getFooter(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        backgroundColor: bgColor,
-        child: Center(
-          child: Image.network(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1024px-OOjs_UI_icon_add.svg.png",
-            width: 30,
-          ),
-        ),
-      ),
     );
   }
 
@@ -213,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       onPressed: null,
                       icon: Icon(
-                        Icons.ac_unit,
+                        Icons.notifications,
                         size: 20,
                         color: white.withOpacity(0.5),
                       ),
@@ -221,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       onPressed: null,
                       icon: Icon(
-                        Icons.ac_unit,
+                        Icons.person,
                         size: 18,
                         color: white.withOpacity(0.5),
                       ),
@@ -229,19 +218,12 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       onPressed: null,
                       icon: Icon(
-                        Icons.mic_rounded,
+                        Icons.search,
                         size: 22,
                         color: white.withOpacity(0.5),
                       ),
                     ),
-                    IconButton(
-                      onPressed: null,
-                      icon: Icon(
-                        Icons.ac_unit,
-                        size: 22,
-                        color: white.withOpacity(0.5),
-                      ),
-                    )
+
                   ],
                 ),
               ),
