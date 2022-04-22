@@ -2,6 +2,4 @@
 
 ## URL de la aplicación desplegada
 
-'''
 `https://bloc-posty.herokuapp.com`
-'''
