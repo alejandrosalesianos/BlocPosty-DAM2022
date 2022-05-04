@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service("userDetailService")
@@ -66,11 +67,13 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                     .rol(userDto.getPermisos())
                     .perfil(userDto.getPerfil())
                     .telefono(userDto.getTelefono())
+                    .blocList(new ArrayList<>())
                     .build();
             return repository.save(user);
         } else{
             return null;
         }
     }
+
     //TODO falta más codigo
 }

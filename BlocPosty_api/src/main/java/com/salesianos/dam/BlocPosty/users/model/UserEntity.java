@@ -1,5 +1,6 @@
 package com.salesianos.dam.BlocPosty.users.model;
 
+import com.salesianos.dam.BlocPosty.model.Bloc;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -53,6 +55,9 @@ public class UserEntity implements UserDetails {
 
     private UserProfile perfil;
 
+    @ManyToMany(mappedBy = "usersInTheList")
+    private List<Bloc> blocList;
+
 
 
     @Override
@@ -88,5 +93,16 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addBloc(Bloc b) {
+        if (this.getBlocList() == null) {
+            this.setBlocList(new ArrayList<>());
+        }
+        this.getBlocList().add(b);
+
+        if (b.getUsersInTheList() == null)
+            b.setUsersInTheList(new ArrayList<>());
+        b.getUsersInTheList().add(this);
     }
 }

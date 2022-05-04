@@ -3,6 +3,7 @@ package com.salesianos.dam.BlocPosty.security;
 import com.salesianos.dam.BlocPosty.security.dto.LoginDto;
 import com.salesianos.dam.BlocPosty.security.dto.UsuarioResponseJwt;
 import com.salesianos.dam.BlocPosty.security.jwt.JwtProvider;
+import com.salesianos.dam.BlocPosty.users.dto.GetUserDto;
 import com.salesianos.dam.BlocPosty.users.dto.UserDtoConverter;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,7 @@ public class AuthenticationController {
                 .build();
     }
     @GetMapping("/me")
-    public ResponseEntity<?> myProfile(@AuthenticationPrincipal UserEntity user) {
+    public ResponseEntity<GetUserDto> myProfile(@AuthenticationPrincipal UserEntity user) {
         return ResponseEntity.ok(userDtoConverter.UserEntityToGetUserDto(user));
     }
 }
