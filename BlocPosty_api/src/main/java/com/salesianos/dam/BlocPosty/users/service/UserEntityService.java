@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service("userDetailService")
@@ -75,5 +76,49 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
         }
     }
 
-    //TODO falta más codigo
+    public UserEntity edit (UUID id, CreateUserDto createUserDto, MultipartFile file, UserEntity userEntity) throws Exception {
+        if (createUserDto.getPassword().equals(createUserDto.getPassword2())){
+
+            Optional<UserEntity> user = repository.findById(id);
+
+            if (!user.isPresent()){
+                throw new UsernameNotFoundException("No se encontro al usuario especificado");
+            }
+            else {
+                storageService.deleteFile(user.get().getFotoPerfil());
+
+                String filename = storageService.store(file);
+
+                String extension = StringUtils.getFilenameExtension(filename);
+
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+                BufferedImage escaledImage = storageService.simpleResizer(originalImage,128);
+
+                OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
+
+                ImageIO.write(escaledImage,extension,outputStream);
+
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(filename)
+                        .toUriString();
+
+                return user.map(newUser -> save(newUser.builder()
+                        .id(userEntity.getId())
+                        .username(createUserDto.getUsername())
+                        .email(createUserDto.getEmail())
+                        .fotoPerfil(uri)
+                        .password(passwordEncoder.encode(createUserDto.getPassword()))
+                        .rol(createUserDto.getPermisos())
+                        .perfil(createUserDto.getPerfil())
+                        .telefono(createUserDto.getTelefono())
+                        .blocList(userEntity.getBlocList())
+                        .build())).get();
+            }
+        }
+        else {
+            throw new Exception("Las contraseñas no coinciden");
+        }
+    }
 }

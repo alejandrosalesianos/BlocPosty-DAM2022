@@ -3,12 +3,15 @@ package com.salesianos.dam.BlocPosty.services.impl;
 import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.model.Bloc;
 import com.salesianos.dam.BlocPosty.model.dto.BlocDtoConverter;
+import com.salesianos.dam.BlocPosty.model.dto.CreateBlocDto;
 import com.salesianos.dam.BlocPosty.model.dto.GetBlocDto;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.base.BaseService;
+import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +33,9 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
             return blocs.stream().map(blocDtoConverter::BlocToGetBlocDto).collect(Collectors.toList());
         }
 
+    }
+    public Bloc editBloc(CreateBlocDto createBlocDto, MultipartFile file, UserEntity userEntity){
+        return null;
     }
 
 

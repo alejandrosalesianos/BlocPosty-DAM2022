@@ -3,6 +3,7 @@ package com.salesianos.dam.BlocPosty.error;
 import com.salesianos.dam.BlocPosty.error.config.model.ApiError;
 import com.salesianos.dam.BlocPosty.error.config.model.ApiSubError;
 import com.salesianos.dam.BlocPosty.error.config.model.ValidationError;
+import com.salesianos.dam.BlocPosty.error.exception.EditException;
 import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.error.exception.NotFollowingException;
 import com.salesianos.dam.BlocPosty.error.exception.StorageException;
@@ -18,6 +19,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,17 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ListNotFoundException.class})
     public ResponseEntity<ApiError> handleListEntityNotFound (ListNotFoundException ex, WebRequest request){
+        ApiError apiError = ApiError.builder()
+                .mensaje(ex.getLocalizedMessage())
+                .codigo(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.NOT_FOUND)
+                .fecha(LocalDateTime.now())
+                .ruta(((ServletWebRequest) request).getRequest().getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+    @ExceptionHandler({EntityNotFoundException.class})
+    public ResponseEntity<ApiError> handleListEntityNotFound (EntityNotFoundException ex, WebRequest request){
         ApiError apiError = ApiError.builder()
                 .mensaje(ex.getLocalizedMessage())
                 .codigo(HttpStatus.NOT_FOUND.value())
@@ -49,6 +62,17 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler({NotFollowingException.class})
     public ResponseEntity<ApiError> handleEntityNotFound (NotFollowingException ex, WebRequest request){
+        ApiError apiError = ApiError.builder()
+                .mensaje(ex.getLocalizedMessage())
+                .codigo(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST)
+                .fecha(LocalDateTime.now())
+                .ruta(((ServletWebRequest) request).getRequest().getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
+    @ExceptionHandler({EditException.class})
+    public ResponseEntity<ApiError> handleEditException (EditException ex, WebRequest request){
         ApiError apiError = ApiError.builder()
                 .mensaje(ex.getLocalizedMessage())
                 .codigo(HttpStatus.BAD_REQUEST.value())
