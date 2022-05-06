@@ -1,13 +1,12 @@
 package com.salesianos.dam.BlocPosty.users.dto;
 
 import com.salesianos.dam.BlocPosty.model.Bloc;
-import com.salesianos.dam.BlocPosty.model.dto.GetBlocDtoWithoutList;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDtoWithoutList;
 import com.salesianos.dam.BlocPosty.users.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +28,7 @@ public class UserDtoConverter {
                 .perfil(user.getPerfil().name())
                 .rol(user.getRol().name())
                 .Blocs(ListBlocToListGetBlocDtoWithoutList(userEntityRepository.findAllBlocs(user.getId())))
+                .peticiones(userEntityRepository.findAllSolicitudes(user.getId()))
                 .build();
     }
     private List<GetBlocDtoWithoutList> ListBlocToListGetBlocDtoWithoutList(List<Bloc> blocs){

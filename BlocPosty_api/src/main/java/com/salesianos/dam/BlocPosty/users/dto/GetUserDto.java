@@ -1,8 +1,7 @@
 package com.salesianos.dam.BlocPosty.users.dto;
 
-import com.salesianos.dam.BlocPosty.model.Bloc;
-import com.salesianos.dam.BlocPosty.model.dto.GetBlocDto;
-import com.salesianos.dam.BlocPosty.model.dto.GetBlocDtoWithoutList;
+import com.salesianos.dam.BlocPosty.model.PeticionBloc;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDtoWithoutList;
 import lombok.*;
 
 import java.util.List;
@@ -22,4 +21,5 @@ public class GetUserDto {
     private String rol;
     private String avatar;
     private List<GetBlocDtoWithoutList> Blocs;
+    private List<PeticionBloc> peticiones;
 }

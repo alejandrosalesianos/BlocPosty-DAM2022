@@ -2,9 +2,9 @@ package com.salesianos.dam.BlocPosty.services.impl;
 
 import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.model.Bloc;
-import com.salesianos.dam.BlocPosty.model.dto.BlocDtoConverter;
-import com.salesianos.dam.BlocPosty.model.dto.CreateBlocDto;
-import com.salesianos.dam.BlocPosty.model.dto.GetBlocDto;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.BlocDtoConverter;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.CreateBlocDto;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDto;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.base.BaseService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;

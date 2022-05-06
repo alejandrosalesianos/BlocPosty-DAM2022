@@ -2,9 +2,9 @@ package com.salesianos.dam.BlocPosty.controller;
 
 import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.model.Bloc;
-import com.salesianos.dam.BlocPosty.model.dto.BlocDtoConverter;
-import com.salesianos.dam.BlocPosty.model.dto.CreateBlocDto;
-import com.salesianos.dam.BlocPosty.model.dto.GetBlocDto;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.BlocDtoConverter;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.CreateBlocDto;
+import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDto;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.impl.BlocService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
@@ -16,7 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,5 +48,17 @@ public class BlocController {
         userEntityService.save(userr);
         GetBlocDto getBlocDto = blocDtoConverter.BlocToGetBlocDto(bloc);
         return ResponseEntity.status(HttpStatus.CREATED).body(getBlocDto);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBloc(@PathVariable Long id){
+        Optional<Bloc> bloc = blocService.findById(id);
+        if (bloc.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        else{
+            blocService.delete(bloc.get());
+            return ResponseEntity.noContent().build();
+        }
+
     }
 }

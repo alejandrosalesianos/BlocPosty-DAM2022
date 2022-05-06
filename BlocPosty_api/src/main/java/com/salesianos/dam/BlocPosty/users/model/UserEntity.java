@@ -1,6 +1,7 @@
 package com.salesianos.dam.BlocPosty.users.model;
 
 import com.salesianos.dam.BlocPosty.model.Bloc;
+import com.salesianos.dam.BlocPosty.model.PeticionBloc;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -54,6 +55,9 @@ public class UserEntity implements UserDetails {
 
     @ManyToMany(mappedBy = "usersInTheList")
     private List<Bloc> blocList;
+
+    @OneToMany(mappedBy = "emisor")
+    private List<PeticionBloc> solicitudes;
 
 
 

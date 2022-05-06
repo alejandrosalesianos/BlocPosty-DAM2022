@@ -1,4 +1,4 @@
-package com.salesianos.dam.BlocPosty.model.dto;
+package com.salesianos.dam.BlocPosty.model.dto.Bloc;
 
 import com.salesianos.dam.BlocPosty.users.dto.GetUserDto;
 import com.salesianos.dam.BlocPosty.users.dto.GetUserDtoWithoutList;

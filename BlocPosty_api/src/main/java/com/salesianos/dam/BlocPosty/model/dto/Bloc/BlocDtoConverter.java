@@ -1,21 +1,15 @@
-package com.salesianos.dam.BlocPosty.model.dto;
+package com.salesianos.dam.BlocPosty.model.dto.Bloc;
 
-import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.model.Bloc;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
-import com.salesianos.dam.BlocPosty.users.dto.GetUserDto;
 import com.salesianos.dam.BlocPosty.users.dto.GetUserDtoWithoutList;
-import com.salesianos.dam.BlocPosty.users.dto.UserDtoConverter;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
