@@ -9,12 +9,18 @@ import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.impl.BlocService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import com.salesianos.dam.BlocPosty.users.service.UserEntityService;
+import com.salesianos.dam.BlocPosty.utils.PaginationLinksUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +33,7 @@ public class BlocController {
     private final BlocRepository blocRepository;
     private final BlocDtoConverter blocDtoConverter;
     private final UserEntityService userEntityService;
+    private final PaginationLinksUtil paginationLinksUtil;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findOneBloc(@PathVariable Long id) {
@@ -35,9 +42,10 @@ public class BlocController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<GetBlocDto>> findAll() throws ListNotFoundException {
-        List<Bloc> blocs = blocRepository.findAll();
-            return ResponseEntity.ok().body(blocService.BlocListToGetBlocDtoList(blocs));
+    public ResponseEntity<Page<GetBlocDto>> findAll(@PageableDefault(size = 100)Pageable pageable, HttpServletRequest request) throws ListNotFoundException {
+        Page<Bloc> blocs = blocRepository.findAll(pageable);
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+            return ResponseEntity.ok().header("link",paginationLinksUtil.createLinkHeader(blocs,uriComponentsBuilder)).body(blocService.BlocListToGetBlocDtoList(blocs));
     }
     @PostMapping("/")
     public ResponseEntity<GetBlocDto> postBloc(@RequestBody CreateBlocDto createBlocDto, @AuthenticationPrincipal UserEntity user) throws ListNotFoundException {

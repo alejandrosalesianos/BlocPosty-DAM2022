@@ -56,7 +56,7 @@ public class UserEntity implements UserDetails {
     @ManyToMany(mappedBy = "usersInTheList")
     private List<Bloc> blocList;
 
-    @OneToMany(mappedBy = "emisor")
+    @OneToMany(mappedBy = "userReceptor")
     private List<PeticionBloc> solicitudes;
 
 

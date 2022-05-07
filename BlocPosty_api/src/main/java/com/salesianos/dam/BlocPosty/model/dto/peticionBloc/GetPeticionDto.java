@@ -10,6 +10,7 @@ public class GetPeticionDto {
 
     private Long id;
     private String emisor;
+    private String userReceptor;
     private String receptor;
     private String mensaje;
 }

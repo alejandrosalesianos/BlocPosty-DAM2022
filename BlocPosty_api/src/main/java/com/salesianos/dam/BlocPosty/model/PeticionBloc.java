@@ -18,7 +18,9 @@ public class PeticionBloc {
 
     @ManyToOne
     @JoinColumn(name = "emisor_id")
-    private UserEntity emisor;
+    private UserEntity userReceptor;
+
+    private String emisor;
 
     @ManyToOne
     @JoinColumn(name = "receptor_id")

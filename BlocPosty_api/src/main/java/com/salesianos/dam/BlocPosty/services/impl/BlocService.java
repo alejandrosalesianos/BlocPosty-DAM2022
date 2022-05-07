@@ -9,6 +9,8 @@ import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.base.BaseService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,11 +28,11 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
         return this.repository.findFirstById(id).orElseThrow(() -> new UsernameNotFoundException(id + " No encontrado"));
     }
 
-    public List<GetBlocDto> BlocListToGetBlocDtoList(List<Bloc> blocs) throws ListNotFoundException {
+    public Page<GetBlocDto> BlocListToGetBlocDtoList(Page<Bloc> blocs) throws ListNotFoundException {
         if (blocs.isEmpty()){
             throw new ListNotFoundException("Bloc");
         }else {
-            return blocs.stream().map(blocDtoConverter::BlocToGetBlocDto).collect(Collectors.toList());
+            return new PageImpl<>(blocs.stream().map(blocDtoConverter::BlocToGetBlocDto).collect(Collectors.toList()));
         }
 
     }

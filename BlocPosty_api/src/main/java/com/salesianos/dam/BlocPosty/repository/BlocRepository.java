@@ -2,6 +2,8 @@ package com.salesianos.dam.BlocPosty.repository;
 
 import com.salesianos.dam.BlocPosty.model.Bloc;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,6 @@ public interface BlocRepository extends JpaRepository<Bloc,Long> {
             """
     )
     List<UserEntity> findAllUsers(@Param("id") Long id);
+
+   Page<Bloc> findAll(Pageable pageable);
 }

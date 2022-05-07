@@ -481,3 +481,19 @@ alter table peticion_bloc drop constraint FK1f1kxebxysvirravhnsxlf886 [42102-200
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PETICION_BLOC" no encontrada
 Table "PETICION_BLOC" not found; SQL statement:
 alter table peticion_bloc drop constraint FKgamcc0g03h7jnpi25qd1wruur [42102-200]
+2022-05-07 18:47:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "BLOC_USERS_IN_THE_LIST" no encontrada
+Table "BLOC_USERS_IN_THE_LIST" not found; SQL statement:
+alter table bloc_users_in_the_list drop constraint FKjofgae2xltpdfj4mdnhgvwov3 [42102-200]
+2022-05-07 18:47:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "BLOC_USERS_IN_THE_LIST" no encontrada
+Table "BLOC_USERS_IN_THE_LIST" not found; SQL statement:
+alter table bloc_users_in_the_list drop constraint FKgybl7flm5w7u8c8h1f7j18vey [42102-200]
+2022-05-07 18:47:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PETICION_BLOC" no encontrada
+Table "PETICION_BLOC" not found; SQL statement:
+alter table peticion_bloc drop constraint FKgamcc0g03h7jnpi25qd1wruur [42102-200]
+2022-05-07 18:47:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PETICION_BLOC" no encontrada
+Table "PETICION_BLOC" not found; SQL statement:
+alter table peticion_bloc drop constraint FK1f1kxebxysvirravhnsxlf886 [42102-200]

@@ -38,4 +38,14 @@ public class PeticionBlocController {
             return ResponseEntity.status(HttpStatus.CREATED).body(peticionDtoConverter.PeticionBlocToGetPeticionDto(peticionBloc));
         }
     }
+    @PostMapping("/accept/{id}")
+    public ResponseEntity<?> acceptFollow(@PathVariable Long id, @AuthenticationPrincipal UserEntity user){
+        peticionBlocService.acceptPeticionFollow(id,user);
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/decline/{id}")
+    public ResponseEntity<?> declineFollow(@PathVariable Long id){
+        peticionBlocService.declinePeticionFollow(id);
+        return ResponseEntity.ok().build();
+    }
 }

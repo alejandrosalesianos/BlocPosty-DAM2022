@@ -9,7 +9,8 @@ public class PeticionDtoConverter {
     public GetPeticionDto PeticionBlocToGetPeticionDto(PeticionBloc peticionBloc){
         return GetPeticionDto.builder()
                 .id(peticionBloc.getId())
-                .emisor(peticionBloc.getEmisor().getUsername())
+                .emisor(peticionBloc.getEmisor())
+                .userReceptor(peticionBloc.getUserReceptor().getUsername())
                 .receptor(peticionBloc.getReceptor().getTitulo())
                 .mensaje(peticionBloc.getMensaje())
                 .build();
