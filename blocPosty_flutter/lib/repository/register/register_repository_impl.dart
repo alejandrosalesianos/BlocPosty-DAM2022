@@ -15,7 +15,7 @@ class RegisterRepositoryImpl extends RegisterRepository{
       'Content-Type':'multipart/form-data',
     };
 
-    final uri = Uri.parse('${ApiConstants.apiBaseUrl}auth/register/');
+    final uri = Uri.parse('${ApiConstants.apiBaseUrl}user/auth/register/');
 
     final body = jsonEncode({
       'username': registerDto.username,

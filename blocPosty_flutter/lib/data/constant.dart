@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ApiConstants {
-  static String apiBaseUrl = "http://10.0.2.2:8080/";
+  static String apiBaseUrl = "https://bloc-posty.herokuapp.com/";
 }
 
 const Color bgColor = Color(0xFF212227);

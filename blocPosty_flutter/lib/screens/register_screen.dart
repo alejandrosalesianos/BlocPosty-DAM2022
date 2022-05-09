@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController = TextEditingController();
     _repeatpasswordController = TextEditingController();
     _telefonoController = TextEditingController();
-    _userController.text = "V de Vicente";
+    _userController.text = "Vicente";
     _emailController.text = "V@Gmail.com";
     _passwordController.text = "Pingo123";
     _repeatpasswordController.text = "Pingo123";
