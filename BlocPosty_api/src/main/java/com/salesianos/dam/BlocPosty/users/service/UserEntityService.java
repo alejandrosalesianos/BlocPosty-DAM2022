@@ -31,7 +31,6 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     private final PasswordEncoder passwordEncoder;
     private final StorageService storageService;
-    private final UserDtoConverter userDtoConverter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -114,6 +113,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                         .perfil(createUserDto.getPerfil())
                         .telefono(createUserDto.getTelefono())
                         .blocList(userEntity.getBlocList())
+                        .solicitudes(userEntity.getSolicitudes())
                         .build())).get();
             }
         }
