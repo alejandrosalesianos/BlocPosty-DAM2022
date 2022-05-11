@@ -1,9 +1,9 @@
 package com.salesianos.dam.BlocPosty.model.dto.Bloc;
 
-import com.salesianos.dam.BlocPosty.users.dto.GetUserDto;
 import com.salesianos.dam.BlocPosty.users.dto.GetUserDtoWithoutList;
 import lombok.*;
 
+import javax.persistence.Lob;
 import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor

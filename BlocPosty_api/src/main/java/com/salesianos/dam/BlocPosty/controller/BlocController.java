@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,7 @@ public class BlocController {
     private final UserEntityService userEntityService;
     private final PaginationLinksUtil paginationLinksUtil;
 
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity<?> findOneBloc(@PathVariable Long id) {
             Bloc bloc = blocService.findBlocById(id);

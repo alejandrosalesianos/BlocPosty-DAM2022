@@ -2,6 +2,8 @@ package com.salesianos.dam.BlocPosty.model.dto.Bloc;
 
 import lombok.*;
 
+import javax.persistence.Lob;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
