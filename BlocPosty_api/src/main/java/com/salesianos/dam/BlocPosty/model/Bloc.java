@@ -21,6 +21,7 @@ public class Bloc {
 
     private String titulo;
 
+    @Lob
     private String contenido;
 
     private String multimedia;
