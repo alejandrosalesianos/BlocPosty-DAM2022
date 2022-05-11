@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class UserDtoConverter {
     private final UserEntityRepository userEntityRepository;
     private final PeticionDtoConverter peticionDtoConverter;
 
+    @Transactional
     public GetUserDto UserEntityToGetUserDto(UserEntity user){
 
         return GetUserDto.builder()
@@ -35,6 +37,7 @@ public class UserDtoConverter {
                 .peticiones(ListPeticionBlocToGetPeticionDtoList(userEntityRepository.findAllSolicitudes(user.getId())))
                 .build();
     }
+    @Transactional
     private List<GetBlocDtoWithoutList> ListBlocToListGetBlocDtoWithoutList(List<Bloc> blocs){
         if (blocs.isEmpty()){
             return Collections.EMPTY_LIST;
@@ -42,6 +45,7 @@ public class UserDtoConverter {
         return blocs.stream().map(this::BlocToGetBlocDtoWithoutList).collect(Collectors.toList());
         }
     }
+    @Transactional
     private GetBlocDtoWithoutList BlocToGetBlocDtoWithoutList(Bloc bloc){
         return GetBlocDtoWithoutList.builder()
                 .id(bloc.getId())

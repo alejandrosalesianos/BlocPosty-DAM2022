@@ -7,6 +7,7 @@ import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ public class BlocDtoConverter {
 
     private final BlocRepository blocRepository;
 
+    @Transactional
     public GetBlocDto BlocToGetBlocDto(Bloc bloc){
         return GetBlocDto.builder()
                 .id(bloc.getId())
@@ -29,6 +31,7 @@ public class BlocDtoConverter {
                 .listaDeUsuarios(ListUserEntityToListGetUserDtoWithoutList(blocRepository.findAllUsers(bloc.getId())))
                 .build();
     }
+    @Transactional
     public Bloc CreateBlocToBloc(CreateBlocDto createBlocDto,UserEntity user) {
 
         return Bloc.builder()
@@ -40,6 +43,7 @@ public class BlocDtoConverter {
                 .usersInTheList(new ArrayList<>())
                 .build();
     }
+    @Transactional
     private List<GetUserDtoWithoutList> ListUserEntityToListGetUserDtoWithoutList(List<UserEntity> userEntities){
         if (userEntities.isEmpty()){
             return Collections.EMPTY_LIST;
@@ -47,6 +51,7 @@ public class BlocDtoConverter {
             return userEntities.stream().map(this::UserEntityToGetUserDtoWithoutList).collect(Collectors.toList());
         }
     }
+    @Transactional
     private GetUserDtoWithoutList UserEntityToGetUserDtoWithoutList(UserEntity user){
         return GetUserDtoWithoutList.builder()
                 .id(user.getId())
