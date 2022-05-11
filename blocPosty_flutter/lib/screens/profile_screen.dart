@@ -39,46 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             },
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 360,
+              height: MediaQuery.of(context).size.height,
               child: _createUserDetail(context),
-            ),
-          ),
-          SizedBox(
-            height: 70,
-            child: TabBar(
-              indicatorColor: Colors.grey,
-              controller: tabController,
-              tabs: const [
-                Tab(
-                    icon: Icon(
-                  Icons.table_chart_outlined,
-                  color: Colors.grey,
-                )),
-                Tab(
-                    icon: Icon(
-                  Icons.person_pin_outlined,
-                  color: Colors.grey,
-                )),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 150.0,
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                BlocProvider(
-                  create: (context) {
-                    return UserBloc(userRepository)..add(FetchUsersEvent());
-                  },
-                  /*child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height - 200,
-                    child: _createPostsUser(context),
-                  ),*/
-                ),
-                Text('Tab 2')
-              ],
             ),
           ),
         ],
@@ -86,41 +48,56 @@ class _ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  /*_createPostsUser(BuildContext context) {
+  _createBlocsUser(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserInitial) {
         return const Center(child: CircularProgressIndicator());
       } else if (state is UserFetched) {
-        return _buildPostsUser(context, state.meResponse;
+        return _buildBlocsUser(context, state.meResponse);
       } else {
         return const Text('No soportado');
       }
     });
-  }*/
+  }
 
-  /*_buildPostsUser(BuildContext context, MeResponse user) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: List.generate(user.posts.length, (index) {
-          String urlPost = user.posts
-              .elementAt(index)
-              .contenidoMultimedia
-              .replaceAll("localhost", "10.0.2.2");
-          return SizedBox(
-            width: 50,
-            height: 80,
-            child: Image.network(
-              '${urlPost}',
-              fit: BoxFit.fill,
-            ),
-          );
-        }),
+  _buildBlocsUser(BuildContext context, MeResponse user) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: GridView.count(
+
+          crossAxisCount: 2,
+          children: List.generate(user.blocs.length, (index) {
+            return Container(
+              margin: EdgeInsets.only(right: 10, bottom: 10),
+              decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.all(Radius.circular(20))),
+              width: 50,
+              height: 80,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      '${user.blocs.elementAt(index).titulo}',textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        '${user.blocs.elementAt(index).contenido}',textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+                
+              ),
+            );
+          }),
+        ),
       ),
     );
-  }*/
+  }
 
   _createUserDetail(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
@@ -297,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             Container(
                               width: 350.0,
                               height: 35.0,
-                              child: Text("Historias Destacadas",
+                              child: Text("Blocs populares",
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 0, 0, 0),
                                       fontWeight: FontWeight.bold)),
@@ -309,8 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Divider(
                       color: Colors.grey[800],
                       thickness: 2.0,
-                    ),
-                    
+                    ),         
                     SizedBox(
             height: 70,
             child: TabBar(
@@ -329,7 +305,27 @@ class _ProfileScreenState extends State<ProfileScreen>
                 )),
               ],
             ),
-          ),],
+          ),
+          SizedBox(
+            height: 230.0,
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                BlocProvider(
+                  create: (context) {
+                    return UserBloc(userRepository)..add(FetchUsersEvent());
+                  },
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: _createBlocsUser(context),
+                  ),
+                ),
+                Text('Tab 2')
+              ],
+            ),
+          ),
+          ],
           ),
         ),
             ]),
