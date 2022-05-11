@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_posty/Bloc/bloc_bloc/bloc_bloc.dart';
+import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
+import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
+import 'package:flutter_bloc_posty/repository/bloc/bloc_repository_impl.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({ Key? key }) : super(key: key);
@@ -9,11 +15,13 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late TextEditingController _searchController;
+  late BlocRepository blocRepository;
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
+    blocRepository = BlocRepositoryImpl();
   }
 
   @override
@@ -23,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20,top: 60),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width - 50,
                 height: 50,
@@ -36,9 +44,71 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
+            BlocProvider(
+                  create: (context) {
+                    return BlocBloc(blocRepository)..add(FetchBlocEvent());
+                  },
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: _createBlocsUser(context),
+                  ),
+                ),
           ]
         )
       )
     );
+  }
+
+  _createBlocsUser(BuildContext context) {
+    return BlocBuilder<BlocBloc, BlocState>(builder: (context, state) {
+      if (state is BlocInitial) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (state is BlocFetched) {
+        return _buildBlocsUser(context, state.blocs);
+      } else {
+        return const Text('No soportado');
+      }
+    });
+  }
+
+  _buildBlocsUser(BuildContext context, List<BlocModel> blocs) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: StaggeredGridView.countBuilder(
+          crossAxisCount: 4,
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4,
+          itemCount: blocs.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.only(right: 10, bottom: 10),
+              decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.all(Radius.circular(20))),
+              width: 80,
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      '${blocs.elementAt(index).titulo}',textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        '${blocs.elementAt(index).contenido}',textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,maxLines: 8,
+                      ),
+                    ),
+                  ],
+                ),
+                
+              ),
+            );
+          }, staggeredTileBuilder: (int index) {},)
+          )
+        );
   }
 }

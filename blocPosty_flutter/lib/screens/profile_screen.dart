@@ -80,12 +80,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                 child: Column(
                   children: [
                     Text(
-                      '${user.blocs.elementAt(index).titulo}',textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),
+                      '${user.blocs.elementAt(index).titulo}',textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
-                        '${user.blocs.elementAt(index).contenido}',textAlign: TextAlign.center,
+                        '${user.blocs.elementAt(index).contenido}',textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,maxLines: 8,
                       ),
                     ),
                   ],
