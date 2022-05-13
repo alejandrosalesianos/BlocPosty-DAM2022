@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_posty/Bloc/bloc_user/user_bloc.dart';
 import 'package:flutter_bloc_posty/data/constant.dart';
-import 'package:flutter_bloc_posty/json/notes_json.dart';
-import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
 import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository_impl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-        backgroundColor: bgColor,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -102,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                           color: white.withOpacity(0.6)),
                     ),
                   ),
-                  /*SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   BlocProvider(
@@ -111,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height - 200,
                       child: _createBlocsUser(context),
                     ),
-                  ),*/
+                  ),
                   //getGridView()
                 ],
               )
@@ -372,8 +371,12 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             return Container(
                 margin: const EdgeInsets.only(right: 10, bottom: 10),
-                decoration: const BoxDecoration(
-                    color: Colors.green,
+                decoration: BoxDecoration(
+                    color:
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                            .withOpacity(0.7),
+                    /*Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+              .withOpacity(1))*/
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 width: 80,
                 height: 100,
@@ -383,7 +386,7 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  buildBlocContent(BlocModel blocModel, int index) {
+  buildBlocContent(Blocs blocModel, int index) {
     if (index % 7 == 0 && blocModel.multimedia.isNotEmpty) {
       return Column(
         children: [
@@ -451,7 +454,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  getImgBloc(BuildContext context, BlocModel bloc, int index) {
+  getImgBloc(BuildContext context, Blocs bloc, int index) {
     if (bloc.multimedia.isEmpty) {
       return Text('');
     } else if (index % 7 == 0) {

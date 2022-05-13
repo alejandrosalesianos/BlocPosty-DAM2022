@@ -5,6 +5,7 @@ import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository_impl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:math' as math;
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -82,8 +83,10 @@ class _SearchScreenState extends State<SearchScreen> {
           itemBuilder: (context, index) {
             return Container(
                 margin: const EdgeInsets.only(right: 10, bottom: 10),
-                decoration: const BoxDecoration(
-                    color: Colors.green,
+                decoration: BoxDecoration(
+                    color:
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                            .withOpacity(0.7),
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 width: 80,
                 height: 100,

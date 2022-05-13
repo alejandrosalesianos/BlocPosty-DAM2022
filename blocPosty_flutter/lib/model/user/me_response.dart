@@ -1,5 +1,3 @@
-import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
-
 class MeResponse {
   MeResponse({
     required this.id,
@@ -20,7 +18,7 @@ class MeResponse {
   late final String rol;
   late final String avatar;
   late final List<Peticiones> peticiones;
-  late final List<BlocModel> blocs;
+  late final List<Blocs> blocs;
 
   MeResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,7 +31,7 @@ class MeResponse {
     peticiones = List.from(json['peticiones'])
         .map((e) => Peticiones.fromJson(e))
         .toList();
-    blocs = List.from(json['blocs']).map((e) => BlocModel.fromJson(e)).toList();
+    blocs = List.from(json['blocs']).map((e) => Blocs.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
