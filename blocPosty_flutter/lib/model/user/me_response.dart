@@ -1,3 +1,5 @@
+import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
+
 class MeResponse {
   MeResponse({
     required this.id,
@@ -18,9 +20,9 @@ class MeResponse {
   late final String rol;
   late final String avatar;
   late final List<Peticiones> peticiones;
-  late final List<Blocs> blocs;
-  
-  MeResponse.fromJson(Map<String, dynamic> json){
+  late final List<BlocModel> blocs;
+
+  MeResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     email = json['email'];
@@ -28,8 +30,10 @@ class MeResponse {
     perfil = json['perfil'];
     rol = json['rol'];
     avatar = json['avatar'];
-    peticiones = List.from(json['peticiones']).map((e)=>Peticiones.fromJson(e)).toList();
-    blocs = List.from(json['blocs']).map((e)=>Blocs.fromJson(e)).toList();
+    peticiones = List.from(json['peticiones'])
+        .map((e) => Peticiones.fromJson(e))
+        .toList();
+    blocs = List.from(json['blocs']).map((e) => BlocModel.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -41,8 +45,8 @@ class MeResponse {
     _data['perfil'] = perfil;
     _data['rol'] = rol;
     _data['avatar'] = avatar;
-    _data['peticiones'] = peticiones.map((e)=>e.toJson()).toList();
-    _data['blocs'] = blocs.map((e)=>e.toJson()).toList();
+    _data['peticiones'] = peticiones.map((e) => e.toJson()).toList();
+    _data['blocs'] = blocs.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -60,8 +64,8 @@ class Peticiones {
   late final String userReceptor;
   late final String receptor;
   late final String mensaje;
-  
-  Peticiones.fromJson(Map<String, dynamic> json){
+
+  Peticiones.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     emisor = json['emisor'];
     userReceptor = json['userReceptor'];
@@ -95,8 +99,8 @@ class Blocs {
   late final String multimedia;
   late final String userImg;
   late final String userName;
-  
-  Blocs.fromJson(Map<String, dynamic> json){
+
+  Blocs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     titulo = json['titulo'];
     contenido = json['contenido'];
