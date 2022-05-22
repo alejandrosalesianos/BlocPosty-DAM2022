@@ -1,0 +1,18 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{blocInput.titulo}}</mat-card-title>
+      <mat-card-subtitle>{{blocInput.userName}}</mat-card-subtitle>
+      <div class="example-header-image">
+        <img [src]="getAvatarImage(blocInput)" class="avatar" alt="avatar">
+      </div>
+    </mat-card-header>
+    <img mat-card-image [src]="getPostImage(blocInput)" alt="Post" width="300" height="300">
+    <mat-card-content>
+      <p>
+          {{blocInput.contenido}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="delete(blocInput.id)"><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
