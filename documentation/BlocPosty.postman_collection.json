@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "c984ce77-5e4c-48f4-abac-549be2055096",
+		"name": "BlocPosty",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/jsonPrueba.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/MiarmaProject/MiarmaProject/images/ProfilePic.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/user/auth/register/",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"auth",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"skyador\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/auth/login",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/me",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blocs",
+			"item": [
+				{
+					"name": "Get all Blocs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/bloc/",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bloc",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a Bloc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bloc",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/Bloc.json"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/bloc/",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bloc",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find One Bloc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/bloc/1",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bloc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bloc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/bloc/1",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bloc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Bloc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bloc",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/Bloc.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/cosas wapas de ale/astolfo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/bloc/16",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bloc",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Edit user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/jsonPrueba.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/MiarmaProject/MiarmaProject/images/robot.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/user/31736dd6-5d55-4f0e-9a11-feb9750a01a4",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"31736dd6-5d55-4f0e-9a11-feb9750a01a4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Follow a bloc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mensaje\":\"Hola me quiero unir al post\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/peticion/1",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"peticion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Bloc Follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/peticion/accept/1",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"peticion",
+								"accept",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decline Bloc Follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://bloc-posty.herokuapp.com/peticion/decline/2",
+							"protocol": "https",
+							"host": [
+								"bloc-posty",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"peticion",
+								"decline",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
