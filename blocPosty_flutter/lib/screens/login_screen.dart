@@ -6,6 +6,7 @@ import 'package:flutter_bloc_posty/model/login_dto.dart';
 import 'package:flutter_bloc_posty/repository/login/login_repository.dart';
 import 'package:flutter_bloc_posty/repository/login/login_repository_impl.dart';
 import 'package:flutter_bloc_posty/screens/home_screen.dart';
+import 'package:flutter_bloc_posty/screens/menu_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -199,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 });
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => MenuScreen()),
                   );
               } else if (state is LoginErrorState) {
                 _showSnackbar(context, state.message);

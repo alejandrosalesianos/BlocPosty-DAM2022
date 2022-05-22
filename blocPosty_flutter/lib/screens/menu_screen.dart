@@ -35,7 +35,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: null,
         backgroundColor: bgColor,
         child: Center(
@@ -44,7 +44,7 @@ class _MenuScreenState extends State<MenuScreen> {
             width: 30,
           ),
         ),
-      ),
+      ),*/
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
