@@ -21,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service("userDetailService")
@@ -29,7 +31,6 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     private final PasswordEncoder passwordEncoder;
     private final StorageService storageService;
-    private final UserDtoConverter userDtoConverter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,11 +67,58 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                     .rol(userDto.getPermisos())
                     .perfil(userDto.getPerfil())
                     .telefono(userDto.getTelefono())
+                    .blocList(new ArrayList<>())
                     .build();
             return repository.save(user);
         } else{
             return null;
         }
     }
-    //TODO falta más codigo
+
+    public UserEntity edit (UUID id, CreateUserDto createUserDto, MultipartFile file, UserEntity userEntity) throws Exception {
+        if (createUserDto.getPassword().equals(createUserDto.getPassword2())){
+
+            Optional<UserEntity> user = repository.findById(id);
+
+            if (!user.isPresent()){
+                throw new UsernameNotFoundException("No se encontro al usuario especificado");
+            }
+            else {
+                storageService.deleteFile(user.get().getFotoPerfil());
+
+                String filename = storageService.store(file);
+
+                String extension = StringUtils.getFilenameExtension(filename);
+
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+                BufferedImage escaledImage = storageService.simpleResizer(originalImage,128);
+
+                OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
+
+                ImageIO.write(escaledImage,extension,outputStream);
+
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(filename)
+                        .toUriString();
+
+                return user.map(newUser -> save(newUser.builder()
+                        .id(userEntity.getId())
+                        .username(createUserDto.getUsername())
+                        .email(createUserDto.getEmail())
+                        .fotoPerfil(uri)
+                        .password(passwordEncoder.encode(createUserDto.getPassword()))
+                        .rol(createUserDto.getPermisos())
+                        .perfil(createUserDto.getPerfil())
+                        .telefono(createUserDto.getTelefono())
+                        .blocList(userEntity.getBlocList())
+                        .solicitudes(userEntity.getSolicitudes())
+                        .build())).get();
+            }
+        }
+        else {
+            throw new Exception("Las contraseñas no coinciden");
+        }
+    }
 }

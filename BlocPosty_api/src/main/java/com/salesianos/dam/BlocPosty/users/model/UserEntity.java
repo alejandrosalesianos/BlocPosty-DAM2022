@@ -1,9 +1,8 @@
 package com.salesianos.dam.BlocPosty.users.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.salesianos.dam.BlocPosty.model.Bloc;
+import com.salesianos.dam.BlocPosty.model.PeticionBloc;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "usuarios")
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -52,6 +52,12 @@ public class UserEntity implements UserDetails {
     private UserType rol;
 
     private UserProfile perfil;
+
+    @ManyToMany(mappedBy = "usersInTheList")
+    private List<Bloc> blocList;
+
+    @OneToMany(mappedBy = "userReceptor")
+    private List<PeticionBloc> solicitudes;
 
 
 
@@ -88,5 +94,16 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addBloc(Bloc b) {
+        if (this.getBlocList() == null) {
+            this.setBlocList(new ArrayList<>());
+        }
+        this.getBlocList().add(b);
+
+        if (b.getUsersInTheList() == null)
+            b.setUsersInTheList(new ArrayList<>());
+        b.getUsersInTheList().add(this);
     }
 }

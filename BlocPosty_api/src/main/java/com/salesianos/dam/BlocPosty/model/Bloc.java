@@ -1,11 +1,11 @@
 package com.salesianos.dam.BlocPosty.model;
 
+import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -16,13 +16,22 @@ import javax.persistence.Id;
 public class Bloc {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titulo;
 
+    @Lob
     private String contenido;
 
     private String multimedia;
 
     private String userImg;
+
+    private String userName;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<UserEntity> usersInTheList;
+
+
 }

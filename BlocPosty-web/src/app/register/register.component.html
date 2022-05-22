@@ -1,0 +1,27 @@
+<form [formGroup]="registerForm">
+    <label for="nick">Nick de usuario</label>
+    <input id="nick" type="text" required [(ngModel)]="registerDto.nick" formControlName="nick">
+    <br>
+    <label for="Email">Email</label>
+    <input id="Email" type="text" required [(ngModel)]="registerDto.email" formControlName="email">
+    <br>
+    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+    <input id="fechaNacimiento" type="text" required [(ngModel)]="registerDto.fechaNacimiento" formControlName="fechaNacimiento">
+    <br>
+    <label for="Telefono">Telefono</label>
+    <input id="Telefono" type="text" required [(ngModel)]="registerDto.telefono" formControlName="telefono">
+    <br>
+    <label for="Perfil">Perfil</label>
+    <input id="Perfil" type="text" required [(ngModel)]="registerDto.perfil" formControlName="perfil">
+    <br>
+    <label for="Password">Contraseña</label>
+    <input id="Password" type="text" required [(ngModel)]="registerDto.password" formControlName="password">
+    <br>
+    <label for="Password">Repite la contraseña</label>
+    <input id="Password" type="text" required [(ngModel)]="registerDto.password2" formControlName="password2">
+    <br>
+    <label for="avatar">Foto de perfil</label>
+    <input id="avatar" type="file" required [(ngModel)]="filePath" formControlName="avatar">
+    <br>
+    <button mat-raised-button color="primary" (click)="doRegister()"  >registrar</button>
+</form>
