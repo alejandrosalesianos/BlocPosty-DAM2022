@@ -27,17 +27,18 @@ public class CreateUserDto {
     private String username;
 
     @NotBlank
+    @Email
     private String email;
 
     private String telefono;
 
-    @Email
     private UserProfile perfil;
 
-    @NotNull
     private UserType permisos;
 
+    @NotBlank
     private String password;
 
+    @NotBlank
     private String password2;
 }

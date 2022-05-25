@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class UserController {
     private final UserDtoConverter dtoConverter;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<GetUserDto> newUser (@RequestPart("user") CreateUserDto createUserDto, @RequestPart("file") MultipartFile file) throws IOException {
+    public ResponseEntity<GetUserDto> newUser (@Valid @RequestPart("user") CreateUserDto createUserDto, @RequestPart("file") MultipartFile file) throws IOException {
 
         UserEntity user = userEntityService.saveUser(createUserDto,file);
         GetUserDto getUserDto = dtoConverter.UserEntityToGetUserDto(user);

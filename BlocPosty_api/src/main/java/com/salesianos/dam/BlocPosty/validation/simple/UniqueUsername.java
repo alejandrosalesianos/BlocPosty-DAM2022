@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 public @interface UniqueUsername {
 
     String message() default "Este usuario ya existe";
-    Class <?> [] group() default {};
+    Class <?> [] groups() default {};
     Class < ? extends Payload> [] payload() default {};
 }
