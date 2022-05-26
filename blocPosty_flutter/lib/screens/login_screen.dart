@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(builder: (context) => MenuScreen()),
                   );
               } else if (state is LoginErrorState) {
-                _showSnackbar(context, state.message);
+                //_showSnackbar(context, state.message);
               }
             }, buildWhen: (context, state) {
               return state is LoginInitial || state is LoginLoadingState;

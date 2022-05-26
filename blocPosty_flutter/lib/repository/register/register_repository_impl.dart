@@ -36,7 +36,7 @@ class RegisterRepositoryImpl extends RegisterRepository{
 
       final responded = await http.Response.fromStream(res);
 
-      if (res.statusCode == 200) {
+      if (res.statusCode == 201) {
         return RegisterResponse.fromJson(json.decode(responded.body));
       } else {
         throw Exception('Fail to register');

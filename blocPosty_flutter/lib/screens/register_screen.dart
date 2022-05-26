@@ -66,12 +66,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
       child: BlocConsumer<RegisterBloc, RegisterState>(
         listenWhen: (context, state) {
-          return state is ImageSelectedSuccessState;
+          return state is ImageSelectedSuccessState ||state is RegisterSuccessState;
         },
         listener: (context, state) async {
           if (state is RegisterSuccessState) {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MenuScreen()));
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
           } else if (state is RegisterErrorState) {
             _showSnackbar(context, state.message);
           }
@@ -86,8 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             String path = state.selectedFile.path;
             return formWithImage(context, path);
           } else if (state is SaveLoadingState) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
+            return const Center(child: CircularProgressIndicator());
           }
           return form(context);
         },
@@ -263,10 +262,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             _repeatpasswordController.text);
                                     BlocProvider.of<RegisterBloc>(context)
                                         .add(SaveUserEvent(registerDto, ''));
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    Future.delayed(Duration.zero, () {
+                                      ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content: Text('Iniciando sesión')),
                                     );
+                                    });
                                   }
                                 },
                                 child: Text('Siguiente')),
