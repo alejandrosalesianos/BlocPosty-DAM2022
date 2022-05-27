@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_posty/screens/create_bloc_screen.dart';
 import 'package:flutter_bloc_posty/screens/home_screen.dart';
 import 'package:flutter_bloc_posty/screens/login_screen.dart';
 import 'package:flutter_bloc_posty/screens/menu_screen.dart';
@@ -17,18 +18,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/register',
+      initialRoute: '/newBloc',
       routes: {
         '/': (context) => const MenuScreen(),
-        '/register': (context) => const RegisterScreen(), 
+        '/register': (context) => const RegisterScreen(),
         '/login': (context) => const LoginScreen(),
         '/home': (context) => HomePage(),
-        
+        '/newBloc': (context) => CreateBlocScreen(),
       },
     );
   }
 }
-

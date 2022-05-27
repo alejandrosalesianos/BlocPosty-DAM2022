@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
+import 'package:flutter_bloc_posty/model/bloc_model/create_bloc_dto.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
 
 part 'bloc_event.dart';
@@ -13,15 +14,26 @@ class BlocBloc extends Bloc<BlocEvent, BlocState> {
 
   BlocBloc(this.blocRepository) : super(BlocInitial()) {
     on<FetchBlocEvent>(_fetchBloc);
+    on<SaveBlocEvent>(_saveBloc);
   }
 
   void _fetchBloc(FetchBlocEvent event, Emitter<BlocState> emit) async {
     try {
       final blocs = await blocRepository.fetchAllBlocs();
       emit(BlocFetched(blocs));
-      return ;
-    }on Exception catch (e) {
+      return;
+    } on Exception catch (e) {
       emit(BlocFetchError(e.toString()));
+    }
+  }
+
+  void _saveBloc(SaveBlocEvent event, Emitter<BlocState> emit) async {
+    emit(BlocSaveLoadingState());
+    try {
+      final blocResponse = await blocRepository.createBloc(event.createBlocDto);
+      emit(BlocSuccessState());
+    } on Exception catch (e) {
+      emit(BlocErrorState(e.toString()));
     }
   }
 }

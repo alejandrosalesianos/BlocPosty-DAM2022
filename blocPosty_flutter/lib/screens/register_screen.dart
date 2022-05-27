@@ -66,7 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
       child: BlocConsumer<RegisterBloc, RegisterState>(
         listenWhen: (context, state) {
-          return state is ImageSelectedSuccessState ||state is RegisterSuccessState;
+          return state is ImageSelectedSuccessState ||
+              state is RegisterSuccessState;
         },
         listener: (context, state) async {
           if (state is RegisterSuccessState) {
@@ -105,199 +106,202 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 100),
                 child: Column(
-                      children: [
-                        const Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              'BlocPosty',
-                              style: TextStyle(
-                                  fontFamily: 'miarmapp',
-                                  color: Colors.black,
-                                  fontSize: 40),
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Nombre de usuario'),
-                              controller: _userController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos porfavor';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'BlocPosty',
+                          style: TextStyle(color: Colors.black, fontSize: 40),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Nombre de usuario'),
+                          controller: _userController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos porfavor';
+                            }
+                            return null;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Correo electronico'),
-                              controller: _emailController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Contraseña'),
-                              controller: _passwordController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Repetir contraseña'),
-                              controller: _repeatpasswordController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Teléfono'),
-                                controller: _telefonoController,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly
-                                ]),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'Visibilidad del perfil',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ),
-                        DropdownButton(
-                            items: [
-                              DropdownMenuItem(
-                                child: Text('Público'),
-                                value: 'PUBLICO',
-                              ),
-                              DropdownMenuItem(
-                                child: Text('Privado'),
-                                value: 'PRIVADO',
-                              )
-                            ],
-                            value: tipoPerfil,
-                            onChanged: (String? value) {
-                              setState(() {
-                                tipoPerfil = value!;
-                              });
-                            }),
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<RegisterBloc>(context).add(
-                                  const SelectImageEvent(ImageSource.gallery));
-                            },
-                            child: const Text('Seleccionar imagen'),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 30,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    final registerDto = RegisterDto(
-                                        username: _userController.text,
-                                        email: _emailController.text,
-                                        telefono: _telefonoController.text,
-                                        perfil: tipoPerfil,
-                                        permisos: 'USER',
-                                        password: _passwordController.text,
-                                        password2:
-                                            _repeatpasswordController.text);
-                                    BlocProvider.of<RegisterBloc>(context)
-                                        .add(SaveUserEvent(registerDto, ''));
-                                    Future.delayed(Duration.zero, () {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Iniciando sesión')),
-                                    );
-                                    });
-                                  }
-                                },
-                                child: Text('Siguiente')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: const Divider(
-                            height: 60,
-                            thickness: 3,
-                          ),
-                        ),
-                        Text('O inicia sesión desde una cuenta de Google\n',style: TextStyle(color: Colors.grey),),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 85),
-                          child: Row(
-                            children: [
-                              SignInButton(Buttons.Google, onPressed: () {},text: "Iniciar Sesión con Google",),
-                            ],
-                          ),
-                        ),
-                        const Center(
-                          child: Text(
-                            '\nAl registrarte, aceptas nuestras Condiciones. Obtén más información sobre cómo recopilamos, usamos y compartimos tu información en la Política de datos, así como el uso que hacemos de las cookies y tecnologías similares en nuestra Política de cookies.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Correo electronico'),
+                          controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Contraseña'),
+                          controller: _passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Repetir contraseña'),
+                          controller: _repeatpasswordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Teléfono'),
+                            controller: _telefonoController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Visibilidad del perfil',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    DropdownButton(
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Público'),
+                            value: 'PUBLICO',
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Privado'),
+                            value: 'PRIVADO',
+                          )
+                        ],
+                        value: tipoPerfil,
+                        onChanged: (String? value) {
+                          setState(() {
+                            tipoPerfil = value!;
+                          });
+                        }),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<RegisterBloc>(context)
+                              .add(const SelectImageEvent(ImageSource.gallery));
+                        },
+                        child: const Text('Seleccionar imagen'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 30,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                final registerDto = RegisterDto(
+                                    username: _userController.text,
+                                    email: _emailController.text,
+                                    telefono: _telefonoController.text,
+                                    perfil: tipoPerfil,
+                                    permisos: 'USER',
+                                    password: _passwordController.text,
+                                    password2: _repeatpasswordController.text);
+                                BlocProvider.of<RegisterBloc>(context)
+                                    .add(SaveUserEvent(registerDto, ''));
+                                Future.delayed(Duration.zero, () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Iniciando sesión')),
+                                  );
+                                });
+                              }
+                            },
+                            child: Text('Siguiente')),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: const Divider(
+                        height: 60,
+                        thickness: 3,
+                      ),
+                    ),
+                    Text(
+                      'O inicia sesión desde una cuenta de Google\n',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 85),
+                      child: Row(
+                        children: [
+                          SignInButton(
+                            Buttons.Google,
+                            onPressed: () {},
+                            text: "Iniciar Sesión con Google",
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Center(
+                      child: Text(
+                        '\nAl registrarte, aceptas nuestras Condiciones. Obtén más información sobre cómo recopilamos, usamos y compartimos tu información en la Política de datos, así como el uso que hacemos de las cookies y tecnologías similares en nuestra Política de cookies.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -342,194 +346,200 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 100),
                 child: Column(
-                      children: [
-                        const Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              'BlocPosty',
-                              style: TextStyle(
-                                  fontFamily: 'miarmapp',
-                                  color: Colors.black,
-                                  fontSize: 40),
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Nombre de usuario'),
-                              controller: _userController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos porfavor';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'BlocPosty',
+                          style: TextStyle(
+                              fontFamily: 'miarmapp',
+                              color: Colors.black,
+                              fontSize: 40),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Nombre de usuario'),
+                          controller: _userController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos porfavor';
+                            }
+                            return null;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Correo electronico'),
-                              controller: _emailController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Contraseña'),
-                              controller: _passwordController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Repetir contraseña'),
-                              controller: _repeatpasswordController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Introduzca datos validos';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 50,
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Teléfono'),
-                                controller: _telefonoController,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly
-                                ]),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'Visibilidad del perfil',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ),
-                        DropdownButton(
-                            items: [
-                              DropdownMenuItem(
-                                child: Text('Público'),
-                                value: 'PUBLICO',
-                              ),
-                              DropdownMenuItem(
-                                child: Text('Privado'),
-                                value: 'PRIVADO',
-                              )
-                            ],
-                            value: tipoPerfil,
-                            onChanged: (String? value) {
-                              setState(() {
-                                tipoPerfil = value!;
-                              });
-                            }),
-                        Container(
-                          margin: EdgeInsets.all(20),
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: FileImage(File(path)), fit: BoxFit.fill),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            height: 30,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    final registerDto = RegisterDto(
-                                        username: _userController.text,
-                                        email: _emailController.text,
-                                        telefono: _telefonoController.text,
-                                        perfil: tipoPerfil,
-                                        permisos: 'USER',
-                                        password: _passwordController.text,
-                                        password2:
-                                            _repeatpasswordController.text);
-                                    BlocProvider.of<RegisterBloc>(context)
-                                        .add(SaveUserEvent(registerDto, path));
-                                  }
-                                },
-                                child: Text('Registrarse')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: const Divider(
-                            height: 60,
-                            thickness: 3,
-                          ),
-                        ),
-                        Text('O inicia sesión desde una cuenta de Google\n',style: TextStyle(color: Colors.grey),),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 85),
-                          child: Row(
-                            children:  [
-                             SignInButton(Buttons.Google, onPressed: () {}, text: 'Iniciar sesión con Google',)
-                            ],
-                          ),
-                        ),
-                        const Center(
-                          child: Text(
-                            '\nAl registrarte, aceptas nuestras Condiciones. Obtén más información sobre cómo recopilamos, usamos y compartimos tu información en la Política de datos, así como el uso que hacemos de las cookies y tecnologías similares en nuestra Política de cookies.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Correo electronico'),
+                          controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Contraseña'),
+                          controller: _passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Repetir contraseña'),
+                          controller: _repeatpasswordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Introduzca datos validos';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        child: TextFormField(
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Teléfono'),
+                            controller: _telefonoController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Visibilidad del perfil',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    DropdownButton(
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Público'),
+                            value: 'PUBLICO',
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Privado'),
+                            value: 'PRIVADO',
+                          )
+                        ],
+                        value: tipoPerfil,
+                        onChanged: (String? value) {
+                          setState(() {
+                            tipoPerfil = value!;
+                          });
+                        }),
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: FileImage(File(path)), fit: BoxFit.fill),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 30,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                final registerDto = RegisterDto(
+                                    username: _userController.text,
+                                    email: _emailController.text,
+                                    telefono: _telefonoController.text,
+                                    perfil: tipoPerfil,
+                                    permisos: 'USER',
+                                    password: _passwordController.text,
+                                    password2: _repeatpasswordController.text);
+                                BlocProvider.of<RegisterBloc>(context)
+                                    .add(SaveUserEvent(registerDto, path));
+                              }
+                            },
+                            child: Text('Registrarse')),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: const Divider(
+                        height: 60,
+                        thickness: 3,
+                      ),
+                    ),
+                    Text(
+                      'O inicia sesión desde una cuenta de Google\n',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 85),
+                      child: Row(
+                        children: [
+                          SignInButton(
+                            Buttons.Google,
+                            onPressed: () {},
+                            text: 'Iniciar sesión con Google',
+                          )
+                        ],
+                      ),
+                    ),
+                    const Center(
+                      child: Text(
+                        '\nAl registrarte, aceptas nuestras Condiciones. Obtén más información sobre cómo recopilamos, usamos y compartimos tu información en la Política de datos, así como el uso que hacemos de las cookies y tecnologías similares en nuestra Política de cookies.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Padding(

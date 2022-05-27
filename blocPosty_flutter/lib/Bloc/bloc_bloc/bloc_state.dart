@@ -2,7 +2,7 @@ part of 'bloc_bloc.dart';
 
 abstract class BlocState extends Equatable {
   const BlocState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -22,6 +22,19 @@ class BlocFetchError extends BlocState {
   final String message;
 
   const BlocFetchError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class BlocSaveLoadingState extends BlocState {}
+
+class BlocSuccessState extends BlocState {}
+
+class BlocErrorState extends BlocState {
+  final String message;
+
+  const BlocErrorState(this.message);
 
   @override
   List<Object> get props => [message];
