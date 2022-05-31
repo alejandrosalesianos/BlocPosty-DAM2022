@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
         height: MediaQuery.of(context).size.height,
         child: StaggeredGridView.countBuilder(
           staggeredTileBuilder: (int index) =>
-              index % 7 == 0 ? StaggeredTile.count(2, 2) : StaggeredTile.fit(1),
+              index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
           crossAxisCount: 4,
           crossAxisSpacing: 4,
           mainAxisSpacing: 3,
@@ -83,6 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
           itemBuilder: (context, index) {
             return Container(
                 margin: const EdgeInsets.only(right: 10, bottom: 10),
+
                 decoration: BoxDecoration(
                     color:
                         Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
@@ -90,7 +91,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 width: 80,
                 height: 100,
-                child: buildBlocContent(blocs.elementAt(index), index));
+                child:
+                    buildBlocContent(blocs.elementAt(index), index));
           },
         ));
   }
@@ -107,12 +109,12 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+              maxLines: 7,
             ),
           ),
         ],
@@ -129,12 +131,12 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 8,
+              maxLines: 15,
             ),
           ),
         ],
@@ -150,7 +152,7 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
@@ -167,10 +169,13 @@ class _SearchScreenState extends State<SearchScreen> {
     if (bloc.multimedia.isEmpty) {
       return Text('');
     } else if (index % 7 == 0) {
-      return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 100,
-        child: Image.network('${bloc.multimedia}'),
+      return Padding(
+        padding: const EdgeInsets.only(top: 10,bottom: 10),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 100,
+          child: Image.network('${bloc.multimedia}'),
+        ),
       );
     } else {
       return Text('');

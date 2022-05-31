@@ -32,35 +32,45 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        backgroundColor: bgColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {Navigator.pushNamed(context, '/newBloc')},
+        backgroundColor: Colors.white,
         child: Center(
           child: Image.network(
             "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1024px-OOjs_UI_icon_add.svg.png",
             width: 30,
           ),
         ),
-      ),*/
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      
+      body:Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: bgColor,
+        
+        backgroundColor: Colors.black,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
-              color: Colors.white,
+              color: bgColor,
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.search,
-              color: Colors.white,
+              color: bgColor,
             ),
             label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: bgColor,
+            ),
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -73,6 +83,7 @@ class _MenuScreenState extends State<MenuScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
+
       ),
     );
   }
