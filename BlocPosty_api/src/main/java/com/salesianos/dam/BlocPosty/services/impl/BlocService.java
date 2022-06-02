@@ -52,6 +52,19 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
         if (bloc.isEmpty()){
             throw new UsernameNotFoundException("No se encontro el bloc especificado");
         }
+        if (!bloc.get().getMultimedia().isEmpty() && file.isEmpty()){
+            storageService.deleteFile(bloc.get().getMultimedia());
+
+            return bloc.map(newBloc -> save(newBloc.builder()
+                    .id(id)
+                    .titulo(createBlocDto.getTitulo())
+                    .contenido(createBlocDto.getContenido())
+                    .multimedia("")
+                    .userImg(userEntity.getFotoPerfil())
+                    .userName(userEntity.getUsername())
+                    .usersInTheList(bloc.get().getUsersInTheList())
+                    .build())).get();
+        }
         if (!bloc.get().getMultimedia().isEmpty()){
             storageService.deleteFile(bloc.get().getMultimedia());
 
@@ -82,19 +95,7 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                     .usersInTheList(bloc.get().getUsersInTheList())
                     .build())).get();
         }
-        if (!bloc.get().getMultimedia().isEmpty() && file.isEmpty()){
-            storageService.deleteFile(bloc.get().getMultimedia());
 
-            return bloc.map(newBloc -> save(newBloc.builder()
-                    .id(id)
-                    .titulo(createBlocDto.getTitulo())
-                    .contenido(createBlocDto.getContenido())
-                    .multimedia("")
-                    .userImg(userEntity.getFotoPerfil())
-                    .userName(userEntity.getUsername())
-                    .usersInTheList(bloc.get().getUsersInTheList())
-                    .build())).get();
-        }
         if (file.isEmpty()){
             return bloc.map(newBloc -> save(newBloc.builder()
                     .id(id)
