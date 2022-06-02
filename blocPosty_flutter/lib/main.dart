@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_posty/screens/create_bloc_screen.dart';
+import 'package:flutter_bloc_posty/screens/edit_bloc_screen.dart';
 import 'package:flutter_bloc_posty/screens/home_screen.dart';
 import 'package:flutter_bloc_posty/screens/login_screen.dart';
 import 'package:flutter_bloc_posty/screens/menu_screen.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/login': (context) => const LoginScreen(),
         '/home': (context) => HomePage(),
-        '/newBloc': (context) => CreateBlocScreen(),
+        '/newBloc': (context) => const CreateBlocScreen(),
+        '/edit': (context) => const EditBlocScreen(),
       },
     );
   }

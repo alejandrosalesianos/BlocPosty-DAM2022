@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                       child: _createBlocsUser(context),
                     ),
                   ),
-                  //getGridView()
+                  
                 ],
               )
             ],
@@ -129,58 +129,70 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildAllBlocs(BuildContext context, MeResponse meResponse) {
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: StaggeredGridView.countBuilder(
-          staggeredTileBuilder: (int index) =>
-              index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
-          crossAxisCount: 4,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 3,
-          itemCount: meResponse.blocs.length,
-          itemBuilder: (context, index) {
-            return Container(
-                margin: const EdgeInsets.only(right: 10, bottom: 10),
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: StaggeredGridView.countBuilder(
+            staggeredTileBuilder: (int index) =>
+                index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
+            crossAxisCount: 4,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 3,
+            itemCount: meResponse.blocs.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: const EdgeInsets.only(right: 10, bottom: 10),
 
-                decoration: BoxDecoration(
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(0.7),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                width: 80,
-                height: 100,
-                child:
-                    buildBlocContent(meResponse.blocs.elementAt(index), index));
-          },
-        ));
+                  decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(0.7),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  width: 80,
+                  height: 100,
+                  child:
+                      buildBlocContent(meResponse.blocs.elementAt(index), index));
+            },
+          )),
+    );
   }
 
   buildBlocContent(Blocs blocModel, int index) {
     if (index % 7 == 0 && blocModel.multimedia.isNotEmpty) {
-      return Column(
-        children: [
-          getImgBloc(context, blocModel, index),
-          Text(
-            '${blocModel.titulo}',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            overflow: TextOverflow.ellipsis,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
-            child: Text(
-              '${blocModel.contenido}',
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/edit', arguments: blocModel);
+        },
+        child: Column(
+          children: [
+            getImgBloc(context, blocModel, index),
+            Text(
+              '${blocModel.titulo}',
               textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
-              maxLines: 7,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
+              child: Text(
+                '${blocModel.contenido}',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 7,
+              ),
+            ),
+          ],
+        ),
       );
     }
     if (index % 7 == 0) {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/edit', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -199,9 +211,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+        )
       );
     } else {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/edit', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -220,6 +237,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+        )
       );
     }
   }
