@@ -2,6 +2,7 @@ package com.salesianos.dam.BlocPosty.model;
 
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -22,7 +23,8 @@ public class Bloc {
     private String titulo;
 
     @Lob
-    @Column(columnDefinition = "VARCHAR(8000)")
+    @Column(columnDefinition = "VARCHAR(1500)")
+    @Type(type = "org.hibernate.type.TextType")
     private String contenido;
 
     private String multimedia;
