@@ -22,6 +22,7 @@ public class Bloc {
     private String titulo;
 
     @Lob
+    @Column(columnDefinition = "VARCHAR(8000)")
     private String contenido;
 
     private String multimedia;

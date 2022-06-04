@@ -1,0 +1,3 @@
+insert into USUARIOS (id,username,email,foto_perfil, password, telefono,rol,perfil) values ('2449b52b20b442d2814c16a394713278', 'skyador', 'A@a.com','https://robohash.org/quorepudiandaeomnis.png?size=50x50&set=set1','$2a$12$12Lk4K.esqTNv3v9CQgY/./iuOk1vdSXke.WSxNqC5u8foyU2O2KG','3169827','ADMIN','PRIVADO')
+insert into BLOC (id,titulo,contenido, multimedia,user_img,user_name) values (DEFAULT,'HOLA','ADiossss wapo  ','','https://robohash.org/quorepudiandaeomnis.png?size=50x50&set=set1','skyador');
+insert into bloc_users_in_the_list (bloc_list_id, users_in_the_list_id) values (1, '2449b52b20b442d2814c16a394713278')

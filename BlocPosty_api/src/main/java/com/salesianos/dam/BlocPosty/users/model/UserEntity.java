@@ -49,8 +49,10 @@ public class UserEntity implements UserDetails {
 
     private String telefono;
 
+    @Enumerated(EnumType.STRING)
     private UserType rol;
 
+    @Enumerated(EnumType.STRING)
     private UserProfile perfil;
 
     @ManyToMany(mappedBy = "usersInTheList")
