@@ -34,25 +34,26 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
     private final BlocDtoConverter blocDtoConverter;
     private final StorageService storageService;
 
-    public Bloc findBlocById(Long id){
+    public Bloc findBlocById(Long id) {
         return this.repository.findFirstById(id).orElseThrow(() -> new UsernameNotFoundException(id + " No encontrado"));
     }
 
     public Page<GetBlocDto> BlocListToGetBlocDtoList(Page<Bloc> blocs) throws ListNotFoundException {
-        if (blocs.isEmpty()){
+        if (blocs.isEmpty()) {
             throw new ListNotFoundException("Bloc");
-        }else {
+        } else {
             return new PageImpl<>(blocs.stream().map(blocDtoConverter::BlocToGetBlocDto).collect(Collectors.toList()));
         }
 
     }
+
     public Bloc editBloc(Long id, CreateBlocDto createBlocDto, MultipartFile file, UserEntity userEntity) throws IOException {
         Optional<Bloc> bloc = repository.findById(id);
 
-        if (bloc.isEmpty()){
+        if (bloc.isEmpty()) {
             throw new UsernameNotFoundException("No se encontro el bloc especificado");
         }
-        if (!bloc.get().getMultimedia().isEmpty() && file.isEmpty()){
+        if (!bloc.get().getMultimedia().isEmpty() && file.isEmpty()) {
             storageService.deleteFile(bloc.get().getMultimedia());
 
             return bloc.map(newBloc -> save(newBloc.builder()
@@ -65,7 +66,7 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                     .usersInTheList(bloc.get().getUsersInTheList())
                     .build())).get();
         }
-        if (!bloc.get().getMultimedia().isEmpty()){
+        if (!bloc.get().getMultimedia().isEmpty()) {
             storageService.deleteFile(bloc.get().getMultimedia());
 
             String filename = storageService.store(file);
@@ -74,11 +75,11 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
 
             BufferedImage originalImage = ImageIO.read(file.getInputStream());
 
-            BufferedImage escaledImage = storageService.simpleResizer(originalImage,256);
+            BufferedImage escaledImage = storageService.simpleResizer(originalImage, 256);
 
             OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
 
-            ImageIO.write(escaledImage,extension,outputStream);
+            ImageIO.write(escaledImage, extension, outputStream);
 
             String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
@@ -95,45 +96,47 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                     .usersInTheList(bloc.get().getUsersInTheList())
                     .build())).get();
         }
+        else{
+                String filename = storageService.store(file);
 
-        if (file.isEmpty()){
-            return bloc.map(newBloc -> save(newBloc.builder()
-                    .id(id)
-                    .titulo(createBlocDto.getTitulo())
-                    .contenido(createBlocDto.getContenido())
-                    .multimedia("")
-                    .userImg(userEntity.getFotoPerfil())
-                    .userName(userEntity.getUsername())
-                    .usersInTheList(bloc.get().getUsersInTheList())
-                    .build())).get();
+                String extension = StringUtils.getFilenameExtension(filename);
+
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+                BufferedImage escaledImage = storageService.simpleResizer(originalImage, 256);
+
+                OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
+
+                ImageIO.write(escaledImage, extension, outputStream);
+
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(filename)
+                        .toUriString();
+
+                return bloc.map(newBloc -> save(newBloc.builder()
+                        .id(id)
+                        .titulo(createBlocDto.getTitulo())
+                        .contenido(createBlocDto.getContenido())
+                        .multimedia(uri)
+                        .userImg(userEntity.getFotoPerfil())
+                        .userName(userEntity.getUsername())
+                        .usersInTheList(bloc.get().getUsersInTheList())
+                        .build())).get();
+            }
         }
-        else {
-            String filename = storageService.store(file);
 
-            String extension = StringUtils.getFilenameExtension(filename);
+    public Bloc editBlocWithoutMultimedia(Long id, CreateBlocDto createBlocDto, UserEntity userEntity) throws IOException {
+        Optional<Bloc> bloc = repository.findById(id);
 
-            BufferedImage originalImage = ImageIO.read(file.getInputStream());
-
-            BufferedImage escaledImage = storageService.simpleResizer(originalImage,256);
-
-            OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
-
-            ImageIO.write(escaledImage,extension,outputStream);
-
-            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(filename)
-                    .toUriString();
-
-            return bloc.map(newBloc -> save(newBloc.builder()
-                    .id(id)
-                    .titulo(createBlocDto.getTitulo())
-                    .contenido(createBlocDto.getContenido())
-                    .multimedia(uri)
-                    .userImg(userEntity.getFotoPerfil())
-                    .userName(userEntity.getUsername())
-                    .usersInTheList(bloc.get().getUsersInTheList())
-                    .build())).get();
-        }
+        return bloc.map(newBloc -> save(newBloc.builder()
+                .id(id)
+                .titulo(createBlocDto.getTitulo())
+                .contenido(createBlocDto.getContenido())
+                .multimedia("")
+                .userImg(userEntity.getFotoPerfil())
+                .userName(userEntity.getUsername())
+                .usersInTheList(bloc.get().getUsersInTheList())
+                .build())).get();
     }
 }

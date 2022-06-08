@@ -75,7 +75,7 @@ public class BlocController {
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<GetBlocDto> editBloc(@RequestPart("bloc") CreateBlocDto createBlocDto , @RequestPart("file")MultipartFile multipartFile, @PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws EditException, IOException {
+    public ResponseEntity<GetBlocDto> editBloc(@RequestPart("bloc") CreateBlocDto createBlocDto , @RequestPart(value = "file",required = false)MultipartFile multipartFile, @PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws EditException, IOException {
         Optional<Bloc> bloc = blocService.findById(id);
         if (bloc.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -83,6 +83,11 @@ public class BlocController {
         }
         if (!user.getUsername().equals(userEntityService.findByUsername(bloc.get().getUserName()).getUsername())){
             throw new EditException();
+        }
+        if (multipartFile == null){
+            Bloc newBloc = blocService.editBlocWithoutMultimedia(id,createBlocDto,user);
+            GetBlocDto getBlocDto = blocDtoConverter.BlocToGetBlocDto(newBloc);
+            return ResponseEntity.ok().body(getBlocDto);
         }
         else {
             Bloc newBloc = blocService.editBloc(id,createBlocDto,multipartFile,user);
