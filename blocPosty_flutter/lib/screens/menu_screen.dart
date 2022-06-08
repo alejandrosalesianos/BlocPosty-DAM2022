@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_posty/data/constant.dart';
+import 'package:flutter_bloc_posty/model/login_response.dart';
 import 'package:flutter_bloc_posty/screens/home_screen.dart';
 import 'package:flutter_bloc_posty/screens/login_screen.dart';
 import 'package:flutter_bloc_posty/screens/profile_screen.dart';

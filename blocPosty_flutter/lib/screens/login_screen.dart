@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
     loginRepository = LoginRepositoryImpl();
     _userController = TextEditingController();
     _passwordController = TextEditingController();
-    _userController.text = 'Vicente';
-    _passwordController.text = 'Pingo123';
+    _userController.text = 'skyador';
+    _passwordController.text = '1234';
   }
 
   @override
@@ -196,11 +196,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 _prefs.then((SharedPreferences prefs) {
                   prefs.setString("token", state.loginResponse.token);
                   prefs.setString("avatar", state.loginResponse.avatar);
-                  
+                  prefs.setString("username", state.loginResponse.username);
                 });
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MenuScreen()),
+                    MaterialPageRoute(settings: RouteSettings(arguments: state.loginResponse),builder: (context) => MenuScreen()),
                   );
               } else if (state is LoginErrorState) {
                 //_showSnackbar(context, state.message);

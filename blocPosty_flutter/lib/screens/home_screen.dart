@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_posty/Bloc/bloc_user/user_bloc.dart';
 import 'package:flutter_bloc_posty/data/constant.dart';
+import 'package:flutter_bloc_posty/model/login_response.dart';
 import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository_impl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math' as math;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -68,16 +70,6 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          "https://lh3.googleusercontent.com/a-/AOh14GhqYCtgODjBQZ2EcAvJApnWnnDPgZe80-AMM6tctw=s600-k-no-rp-mo"),
-                                      fit: BoxFit.cover)),
-                            )
                           ],
                         )
                       ],

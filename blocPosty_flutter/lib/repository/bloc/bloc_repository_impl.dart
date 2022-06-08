@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_bloc_posty/model/register_response.dart';
 import 'package:http/http.dart' as http;
@@ -57,5 +58,62 @@ class BlocRepositoryImpl extends BlocRepository {
     } else {
       throw Exception('Failed to create Post');
     }
+  }
+
+  @override
+  Future<BlocModel> editBloc(CreateBlocDto createBlocDto, String filepath, int idPost) async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    Map<String,String> headers = {
+      "Content-Type":"multipart/form-data",
+      'Authorization': 'Bearer ${token}',
+    };
+
+    final uri = Uri.parse('${ApiConstants.apiBaseUrl}bloc/${idPost}');
+
+    final body = jsonEncode({
+      'titulo': createBlocDto.titulo,
+      'contenido': createBlocDto.contenido,
+    });
+    final http.MultipartRequest request;
+    if (filepath.isNotEmpty) {
+      request = http.MultipartRequest('PUT',uri)
+    ..files.add(http.MultipartFile.fromString('bloc', body,contentType: MediaType('application','json')))
+    ..files.add(await http.MultipartFile.fromPath('file', filepath))
+    ..headers.addAll(headers);
+    } else {
+      request = http.MultipartRequest('PUT',uri)
+    ..files.add(http.MultipartFile.fromString('bloc', body,contentType: MediaType('application','json')))
+    ..files.add(await http.MultipartFile.fromString('file',''))
+    ..headers.addAll(headers);
+    }
+    
+
+    final res = await request.send();
+
+    final responded = await http.Response.fromStream(res);
+
+    if (res.statusCode == 200) {
+      return BlocModel.fromJson(json.decode(responded.body));
+    } else {
+      throw Exception('Fail to edit the bloc');
+    }
+  }
+
+  @override
+  void deleteBloc(int idBloc) async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    Map<String,String> headers = {
+      "Content-Type":"multipart/form-data",
+      'Authorization': 'Bearer ${token}',
+    };
+
+    final uri = Uri.parse('${ApiConstants.apiBaseUrl}bloc/${idBloc}');
+
+    final request = http.MultipartRequest('DELETE',uri)
+    ..headers.addAll(headers);
+
+    await request.send();
   }
 }
