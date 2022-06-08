@@ -92,14 +92,26 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
   }
 
    _buildEditBloc(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Blocs?;
+    var args = ModalRoute.of(context)!.settings.arguments as Blocs?;
     var imageName = '';
     if(args!.multimedia.isNotEmpty) {imageName= args.multimedia.split("/")[4];}
     return SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: Column(children: [
-              buildImg(args.multimedia),
+              GestureDetector(
+                onTap: () {
+                  showDialog(context: context, builder: (context) {
+                  return AlertDialog(
+                    title: const Text('¿Quiere borrar la imagen actual?'),
+                    actions: [
+                      TextButton(onPressed: () {Navigator.pop(context);}, child: Text('No')),
+                      TextButton(onPressed: () {Navigator.pop(context);}, child: Text('Si'))
+                  ],);
+                });
+                },
+                child: buildImg(args.multimedia)
+                ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 10),
               child: SizedBox(
@@ -145,7 +157,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                   contenido: _contenidoController.text,
                   titulo: _tituloController.text,
                   );
-                  BlocProvider.of<BlocBloc>(context).add(EditBlocEvent(createBlocDto, '' , args.id));
+                  BlocProvider.of<BlocBloc>(context).add(EditBlocEvent(createBlocDto, '/data/user/0/com.example.flutter_bloc_posty/cache/'+imageName, args.id));
               }, label: Text('Editar',style: TextStyle(color: Colors.white),)),
               
               TextButton.icon(icon: Icon(Icons.delete,color: Colors.white,), style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)), onPressed: () {
@@ -276,10 +288,4 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
       return Container();
     }
   }
-  /* getUsernameLogged() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final prefs = SharedPreferences.getInstance();
-    String? username = prefs.getString("username");
-    return username;
-  }*/
 }

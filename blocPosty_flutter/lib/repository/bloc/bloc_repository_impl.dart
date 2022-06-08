@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_bloc_posty/model/peticion/peticion_response.dart';
 import 'package:flutter_bloc_posty/model/register_response.dart';
+import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc_posty/data/constant.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';

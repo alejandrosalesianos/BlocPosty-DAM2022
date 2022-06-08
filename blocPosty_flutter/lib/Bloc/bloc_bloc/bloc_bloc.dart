@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/create_bloc_dto.dart';
+import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
 import 'package:image_picker/image_picker.dart';
 

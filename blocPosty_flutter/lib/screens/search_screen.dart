@@ -99,7 +99,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   buildBlocContent(BlocModel blocModel, int index) {
     if (index % 7 == 0 && blocModel.multimedia.isNotEmpty) {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -118,10 +122,14 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ],
-      );
+      ));
     }
     if (index % 7 == 0) {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -140,9 +148,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ],
-      );
+      ));
     } else {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -161,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ],
-      );
+      ));
     }
   }
 
