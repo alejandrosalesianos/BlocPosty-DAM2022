@@ -8,6 +8,7 @@ import 'package:flutter_bloc_posty/Bloc/bloc_bloc/bloc_bloc.dart';
 import 'package:flutter_bloc_posty/Bloc/peticion_bloc/peticion_bloc.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/create_bloc_dto.dart';
+import 'package:flutter_bloc_posty/model/peticion/peticionDto_response.dart';
 import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository_impl.dart';
@@ -26,6 +27,7 @@ class ViewBlocScreen extends StatefulWidget {
 
 class _ViewBlocScreenState extends State<ViewBlocScreen> {
   late TextEditingController _tituloController;
+  late TextEditingController _mensajeController;
   late TextEditingController _contenidoController;
   late PeticionRepository peticionRepository;
   late CreateBlocDto createBlocDto;
@@ -38,6 +40,7 @@ class _ViewBlocScreenState extends State<ViewBlocScreen> {
     peticionRepository = PeticionRepositoryImpl();
     _tituloController = TextEditingController();
     _contenidoController = TextEditingController();
+    _mensajeController = TextEditingController();
   }
   
   @override
@@ -67,10 +70,25 @@ class _ViewBlocScreenState extends State<ViewBlocScreen> {
         },
         listener: (context, state) async {
           if (state is BlocFollowSuccessState) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ViewBlocScreen()));
+            showDialog(context: context, builder: (context) {
+                  return AlertDialog(
+                    title: Text('Petición Enviada con exito'),
+                    actions: [
+                      TextButton(onPressed: () {Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MenuScreen()));}, child: Text('OK'))
+                  ],);
+                });
+            /*Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MenuScreen()));*/
           } else if (state is BlocFollowErrorState) {
-            _showSnackbar(context, state.message);
+            showDialog(context: context, builder: (context) {
+                  return AlertDialog(
+                    title: Text('Fallo al enviar la petición'),
+                    actions: [
+                      TextButton(onPressed: () {Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MenuScreen()));}, child: Text('OK'))
+                  ],);
+                });
           }
         },
         buildWhen: (context, state) {
@@ -127,7 +145,7 @@ class _ViewBlocScreenState extends State<ViewBlocScreen> {
             alignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton.icon(icon: Icon(Icons.send ,color: Colors.white,),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue[700])), onPressed: () {
-                BlocProvider.of<PeticionBloc>(context).add(FollowBlocEvent(args.id));
+                BlocProvider.of<PeticionBloc>(context).add(FollowBlocEvent(args.id, PeticionDto(mensaje: 'Holaaaa')));
               }, label: Text('Seguir',style: TextStyle(color: Colors.white))),
             ],),
               ],

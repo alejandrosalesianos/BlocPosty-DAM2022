@@ -288,4 +288,5 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
       return Container();
     }
   }
+
 }

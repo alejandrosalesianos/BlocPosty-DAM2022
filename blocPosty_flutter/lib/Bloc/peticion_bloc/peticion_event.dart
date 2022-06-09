@@ -9,9 +9,10 @@ abstract class PeticionEvent extends Equatable {
 
 class FollowBlocEvent extends PeticionEvent{
   final int idBloc;
+  final PeticionDto peticionDto;
 
-  const FollowBlocEvent(this.idBloc);
+  const FollowBlocEvent(this.idBloc,this.peticionDto);
 
   @override
-  List<Object> get props => [idBloc];
+  List<Object> get props => [idBloc, peticionDto];
 }
