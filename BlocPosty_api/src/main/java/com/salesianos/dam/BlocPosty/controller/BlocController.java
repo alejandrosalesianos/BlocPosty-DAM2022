@@ -9,6 +9,7 @@ import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDto;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.impl.BlocService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
+import com.salesianos.dam.BlocPosty.users.repository.UserEntityRepository;
 import com.salesianos.dam.BlocPosty.users.service.UserEntityService;
 import com.salesianos.dam.BlocPosty.utils.PaginationLinksUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class BlocController {
     private final BlocDtoConverter blocDtoConverter;
     private final UserEntityService userEntityService;
     private final PaginationLinksUtil paginationLinksUtil;
+    private final UserEntityRepository userEntityRepository;
 
     @Transactional
     @GetMapping("/{id}")
@@ -81,7 +83,7 @@ public class BlocController {
             return ResponseEntity.notFound().build();
 
         }
-        if (!user.getUsername().equals(userEntityService.findByUsername(bloc.get().getUserName()).getUsername())){
+        if (!user.getUsername().equals(userEntityService.findByUsername(bloc.get().getUserName()).getUsername()) && !userEntityRepository.findAllBlocs(user.getId()).contains(bloc.get())){
             throw new EditException();
         }
         if (multipartFile == null){
