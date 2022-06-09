@@ -16,3 +16,7 @@ class FollowBlocEvent extends PeticionEvent{
   @override
   List<Object> get props => [idBloc, peticionDto];
 }
+class FetchPeticionesEvent extends PeticionEvent {
+  @override
+  List<Object> get props => [];
+}

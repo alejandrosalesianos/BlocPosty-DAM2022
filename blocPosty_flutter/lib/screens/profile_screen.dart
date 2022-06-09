@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_posty/Bloc/bloc_user/user_bloc.dart';
+import 'package:flutter_bloc_posty/Bloc/peticion_bloc/peticion_bloc.dart';
 import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository_impl.dart';
+import 'package:flutter_bloc_posty/screens/peticiones_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -323,7 +325,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 child: _createBlocsUser(context),
                               ),
                             ),
-                            Text('Tab 2')
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                child: PeticionesScreen(),
+                              ),
                           ],
                         ),
                       ),

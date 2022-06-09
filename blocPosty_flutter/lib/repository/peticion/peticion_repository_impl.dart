@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_bloc_posty/data/constant.dart';
 import 'package:flutter_bloc_posty/model/peticion/peticionDto_response.dart';
 import 'package:flutter_bloc_posty/model/peticion/peticion_response.dart';
+import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/peticion/peticion_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,4 +31,20 @@ final response = await _client.post(uri, headers: headers, body: jsonEncode(peti
       throw Exception('No puedes seguirte a ti mismo');
     }
   }
+
+  @override
+  Future<List<Peticiones>> fetchPeticiones() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    final response = await _client.get(
+        Uri.parse('${ApiConstants.apiBaseUrl}me'),
+        headers: {'Authorization': 'Bearer ${token}'});
+    if (response.statusCode == 200) {
+      return MeResponse.fromJson(json.decode(response.body)).peticiones;
+    } else {
+      throw Exception('Failed to load peticiones');
+    }
+  }
+
+
 }

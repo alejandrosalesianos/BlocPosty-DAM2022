@@ -22,3 +22,20 @@ class BlocFollowErrorState extends PeticionState{
 }
 
 class BlocFollowLoadingState extends PeticionState{}
+
+class PeticionesFetched extends PeticionState{
+  final List<Peticiones> peticiones;
+
+  const PeticionesFetched(this.peticiones);
+
+  @override
+  List<Object> get props => [peticiones];
+}
+class PeticionesFetchError extends PeticionState {
+  final String message;
+
+  const PeticionesFetchError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
