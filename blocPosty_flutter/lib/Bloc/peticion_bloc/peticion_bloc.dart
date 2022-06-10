@@ -14,25 +14,50 @@ class PeticionBloc extends Bloc<PeticionEvent, PeticionState> {
   final PeticionRepository peticionRepository;
 
   PeticionBloc(this.peticionRepository) : super(PeticionInitial()) {
-        on<FollowBlocEvent>(_followBloc);
-        on<FetchPeticionesEvent>(_fetchPeticiones);
+    on<FollowBlocEvent>(_followBloc);
+    on<FetchPeticionesEvent>(_fetchPeticiones);
+    on<AcceptPeticionEvent>(_acceptPeticion);
+    on<DeclinePeticionEvent>(_declinePeticion);
   }
   void _followBloc(FollowBlocEvent event, Emitter<PeticionState> emit) async {
     emit(BlocFollowLoadingState());
     try {
-      final peticionResponse = await peticionRepository.followBloc(event.idBloc,event.peticionDto);
+      final peticionResponse =
+          await peticionRepository.followBloc(event.idBloc, event.peticionDto);
       emit(BlocFollowSuccessState());
     } on Exception catch (e) {
       emit(BlocFollowErrorState(e.toString()));
     }
   }
 
-  void _fetchPeticiones(FetchPeticionesEvent event, Emitter<PeticionState> emit) async {
+  void _fetchPeticiones(
+      FetchPeticionesEvent event, Emitter<PeticionState> emit) async {
     try {
       final peticiones = await peticionRepository.fetchPeticiones();
       emit(PeticionesFetched(peticiones));
     } on Exception catch (e) {
       emit(PeticionesFetchError(e.toString()));
+    }
+  }
+
+  void _acceptPeticion(AcceptPeticionEvent event, Emitter<PeticionState> emit) {
+    emit(PeticionLoadingState());
+    try {
+      peticionRepository.acceptPeticion(event.idPeticion);
+      emit(PeticionAcceptSuccess());
+    } on Exception catch (e) {
+      emit(PeticionAcceptError(e.toString()));
+    }
+  }
+
+  void _declinePeticion(
+      DeclinePeticionEvent event, Emitter<PeticionState> emit) {
+    emit(PeticionLoadingState());
+    try {
+      peticionRepository.declinePeticion(event.idPeticion);
+      emit(PeticionDeclineSuccess());
+    } on Exception catch (e) {
+      emit(PeticionDeclineError(e.toString()));
     }
   }
 }
