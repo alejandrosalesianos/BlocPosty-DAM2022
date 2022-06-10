@@ -92,9 +92,11 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
 
   _buildEditBloc(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as Blocs?;
+    var urlCache = '';
     var imageName = '';
     if (args!.multimedia.isNotEmpty) {
       imageName = args.multimedia.split("/")[4];
+      urlCache = '/data/user/0/com.example.flutter_bloc_posty/cache/';
     }
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -200,10 +202,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                         titulo: _tituloController.text,
                       );
                       BlocProvider.of<BlocBloc>(context).add(EditBlocEvent(
-                          createBlocDto,
-                          '/data/user/0/com.example.flutter_bloc_posty/cache/' +
-                              imageName,
-                          args.id));
+                          createBlocDto, urlCache + imageName, args.id));
                     },
                     label: Text(
                       'Editar',
@@ -240,13 +239,6 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     },
                     label:
                         Text('Borrar', style: TextStyle(color: Colors.white))),
-                TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue[700])),
-                    onPressed: () {},
-                    child:
-                        Text('Seguir', style: TextStyle(color: Colors.white))),
               ],
             ),
           ],

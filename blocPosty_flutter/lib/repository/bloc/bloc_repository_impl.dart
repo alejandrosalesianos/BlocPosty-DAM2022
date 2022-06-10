@@ -63,11 +63,12 @@ class BlocRepositoryImpl extends BlocRepository {
   }
 
   @override
-  Future<BlocModel> editBloc(CreateBlocDto createBlocDto, String filepath, int idPost) async {
+  Future<BlocModel> editBloc(
+      CreateBlocDto createBlocDto, String filepath, int idPost) async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
-    Map<String,String> headers = {
-      "Content-Type":"multipart/form-data",
+    Map<String, String> headers = {
+      "Content-Type": "multipart/form-data",
       'Authorization': 'Bearer ${token}',
     };
 
@@ -79,17 +80,18 @@ class BlocRepositoryImpl extends BlocRepository {
     });
     final http.MultipartRequest request;
     if (filepath.isNotEmpty) {
-      request = http.MultipartRequest('PUT',uri)
-    ..files.add(http.MultipartFile.fromString('bloc', body,contentType: MediaType('application','json')))
-    ..files.add(await http.MultipartFile.fromPath('file', filepath))
-    ..headers.addAll(headers);
+      request = http.MultipartRequest('PUT', uri)
+        ..files.add(http.MultipartFile.fromString('bloc', body,
+            contentType: MediaType('application', 'json')))
+        ..files.add(await http.MultipartFile.fromPath('file', filepath))
+        ..headers.addAll(headers);
     } else {
-      request = http.MultipartRequest('PUT',uri)
-    ..files.add(http.MultipartFile.fromString('bloc', body,contentType: MediaType('application','json')))
-    ..files.add(await http.MultipartFile.fromString('file',''))
-    ..headers.addAll(headers);
+      request = http.MultipartRequest('PUT', uri)
+        ..files.add(http.MultipartFile.fromString('bloc', body,
+            contentType: MediaType('application', 'json')))
+        ..files.add(http.MultipartFile.fromString('file', ''))
+        ..headers.addAll(headers);
     }
-    
 
     final res = await request.send();
 
@@ -106,15 +108,15 @@ class BlocRepositoryImpl extends BlocRepository {
   void deleteBloc(int idBloc) async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
-    Map<String,String> headers = {
-      "Content-Type":"multipart/form-data",
+    Map<String, String> headers = {
+      "Content-Type": "multipart/form-data",
       'Authorization': 'Bearer ${token}',
     };
 
     final uri = Uri.parse('${ApiConstants.apiBaseUrl}bloc/${idBloc}');
 
-    final request = http.MultipartRequest('DELETE',uri)
-    ..headers.addAll(headers);
+    final request = http.MultipartRequest('DELETE', uri)
+      ..headers.addAll(headers);
 
     await request.send();
   }

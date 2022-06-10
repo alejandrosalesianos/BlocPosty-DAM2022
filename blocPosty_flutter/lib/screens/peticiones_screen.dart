@@ -53,7 +53,7 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
     });
   }
 
-  _buildPeticiones(BuildContext context, List<Peticiones> peticiones) {
+  _buildPeticiones(BuildContext contexto, List<Peticiones> peticiones) {
     return Padding(
       padding: const EdgeInsets.only(left: 5),
       child: SizedBox(
@@ -65,14 +65,14 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
               return Container(
                 width: 100,
                 height: 150,
-                child: _BuildOnePeticion(peticiones.elementAt(index)),
+                child: _BuildOnePeticion(peticiones.elementAt(index), contexto),
               );
             }),
       ),
     );
   }
 
-  _BuildOnePeticion(Peticiones peticion) {
+  _BuildOnePeticion(Peticiones peticion, BuildContext contexto) {
     return Card(
       child: Container(
         height: 100,
@@ -125,7 +125,7 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
                           TextButton(
                             child: Text("Aceptar"),
                             onPressed: () {
-                              BlocProvider.of<PeticionBloc>(context)
+                              BlocProvider.of<PeticionBloc>(contexto)
                                   .add(AcceptPeticionEvent(peticion.id));
                             },
                           ),
