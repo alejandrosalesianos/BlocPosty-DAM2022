@@ -61,8 +61,8 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                     .titulo(createBlocDto.getTitulo())
                     .contenido(createBlocDto.getContenido())
                     .multimedia("")
-                    .userImg(userEntity.getFotoPerfil())
-                    .userName(userEntity.getUsername())
+                    .userImg(bloc.get().getUserImg())
+                    .userName(bloc.get().getUserName())
                     .usersInTheList(bloc.get().getUsersInTheList())
                     .build())).get();
         }
@@ -91,8 +91,8 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                     .titulo(createBlocDto.getTitulo())
                     .contenido(createBlocDto.getContenido())
                     .multimedia(uri)
-                    .userImg(userEntity.getFotoPerfil())
-                    .userName(userEntity.getUsername())
+                    .userImg(bloc.get().getUserImg())
+                    .userName(bloc.get().getUserName())
                     .usersInTheList(bloc.get().getUsersInTheList())
                     .build())).get();
         }
@@ -119,8 +119,8 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                         .titulo(createBlocDto.getTitulo())
                         .contenido(createBlocDto.getContenido())
                         .multimedia(uri)
-                        .userImg(userEntity.getFotoPerfil())
-                        .userName(userEntity.getUsername())
+                        .userImg(bloc.get().getUserImg())
+                        .userName(bloc.get().getUserName())
                         .usersInTheList(bloc.get().getUsersInTheList())
                         .build())).get();
             }
@@ -134,8 +134,8 @@ public class BlocService extends BaseService<Bloc,Long, BlocRepository> {
                 .titulo(createBlocDto.getTitulo())
                 .contenido(createBlocDto.getContenido())
                 .multimedia("")
-                .userImg(userEntity.getFotoPerfil())
-                .userName(userEntity.getUsername())
+                .userImg(bloc.get().getUserImg())
+                .userName(bloc.get().getUserName())
                 .usersInTheList(bloc.get().getUsersInTheList())
                 .build())).get();
     }

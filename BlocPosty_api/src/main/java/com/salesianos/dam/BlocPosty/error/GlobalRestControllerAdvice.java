@@ -3,10 +3,7 @@ package com.salesianos.dam.BlocPosty.error;
 import com.salesianos.dam.BlocPosty.error.config.model.ApiError;
 import com.salesianos.dam.BlocPosty.error.config.model.ApiSubError;
 import com.salesianos.dam.BlocPosty.error.config.model.ValidationError;
-import com.salesianos.dam.BlocPosty.error.exception.EditException;
-import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
-import com.salesianos.dam.BlocPosty.error.exception.NotFollowingException;
-import com.salesianos.dam.BlocPosty.error.exception.StorageException;
+import com.salesianos.dam.BlocPosty.error.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +37,17 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity<ApiError> handleListEntityNotFound (EntityNotFoundException ex, WebRequest request){
+        ApiError apiError = ApiError.builder()
+                .mensaje(ex.getLocalizedMessage())
+                .codigo(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.NOT_FOUND)
+                .fecha(LocalDateTime.now())
+                .ruta(((ServletWebRequest) request).getRequest().getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+    @ExceptionHandler({DeleteException.class})
+    public ResponseEntity<ApiError> handleListEntityNotFound (DeleteException ex, WebRequest request){
         ApiError apiError = ApiError.builder()
                 .mensaje(ex.getLocalizedMessage())
                 .codigo(HttpStatus.NOT_FOUND.value())

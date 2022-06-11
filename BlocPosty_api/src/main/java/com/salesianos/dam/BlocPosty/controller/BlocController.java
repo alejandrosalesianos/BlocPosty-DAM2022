@@ -1,5 +1,6 @@
 package com.salesianos.dam.BlocPosty.controller;
 
+import com.salesianos.dam.BlocPosty.error.exception.DeleteException;
 import com.salesianos.dam.BlocPosty.error.exception.EditException;
 import com.salesianos.dam.BlocPosty.error.exception.ListNotFoundException;
 import com.salesianos.dam.BlocPosty.model.Bloc;
@@ -9,6 +10,7 @@ import com.salesianos.dam.BlocPosty.model.dto.Bloc.GetBlocDto;
 import com.salesianos.dam.BlocPosty.repository.BlocRepository;
 import com.salesianos.dam.BlocPosty.services.impl.BlocService;
 import com.salesianos.dam.BlocPosty.users.model.UserEntity;
+import com.salesianos.dam.BlocPosty.users.model.UserType;
 import com.salesianos.dam.BlocPosty.users.repository.UserEntityRepository;
 import com.salesianos.dam.BlocPosty.users.service.UserEntityService;
 import com.salesianos.dam.BlocPosty.utils.PaginationLinksUtil;
@@ -65,14 +67,14 @@ public class BlocController {
         return ResponseEntity.status(HttpStatus.CREATED).body(getBlocDto);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBloc(@PathVariable Long id){
+    public ResponseEntity<?> deleteBloc(@PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws DeleteException {
         Optional<Bloc> bloc = blocService.findById(id);
-        if (bloc.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        else{
+        if (!bloc.isEmpty() && bloc.get().getUserName().equals(user.getUsername()) || user.getRol().equals(UserType.ADMIN)){
             blocService.delete(bloc.get());
             return ResponseEntity.noContent().build();
+        }
+        else{
+            throw new DeleteException();
         }
 
     }
