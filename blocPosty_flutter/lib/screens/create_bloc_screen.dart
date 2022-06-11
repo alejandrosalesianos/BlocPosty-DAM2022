@@ -81,50 +81,63 @@ class _CreateBlocScreenState extends State<CreateBlocScreen> {
                     const Padding(
                         padding: EdgeInsets.all(10),
                         child: Text(
-                          'BlocPosty',
+                          'Publicar Bloc',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 40,
                           ),
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: 50,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Título'),
-                          controller: _tituloController,
-                          validator: (value) {
+              padding: const EdgeInsets.only(top: 10, left: 10),
+              child: SizedBox(
+                child: TextFormField(
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      overflow: TextOverflow.ellipsis),
+                  controller: _tituloController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Título',
+                      hintStyle:
+                          TextStyle(fontWeight: FontWeight.w300, fontSize: 24)),
+                  maxLines: 3,
+                  minLines: 1,
+                                            validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Introduzca datos validos porfavor';
                             }
                             return null;
                           },
-                        ),
+                ),
+              ),
+            ),
+          ]),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: 50,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Contenido'),
-                          controller: _contenidoController,
-                          validator: (value) {
+Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: TextFormField(
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                  controller: _contenidoController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Notas',
+                      hintStyle:
+                          TextStyle(fontWeight: FontWeight.w300, fontSize: 24)),
+                  minLines: 1,
+                  maxLines: MediaQuery.of(context).size.height.toInt(),
+                  validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Introduzca datos validos porfavor';
                             }
                             return null;
                           },
-                        ),
-                      ),
-                    ),
+                ),
+              ),
+            ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: SizedBox(
@@ -153,10 +166,6 @@ class _CreateBlocScreenState extends State<CreateBlocScreen> {
                   ],
                 ),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            );
   }
 }

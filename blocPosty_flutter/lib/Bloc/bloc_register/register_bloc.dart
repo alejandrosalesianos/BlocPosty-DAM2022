@@ -16,6 +16,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc(this.registerRepository) : super(RegisterInitial()) {
     on<SaveUserEvent>(_doRegister); 
     on<SelectImageEvent>(_onSelectImage);
+    on<EditUserEvent>(_editUser);
   }
 
   void _doRegister(SaveUserEvent event, Emitter<RegisterState> emit) async {
@@ -43,6 +44,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     } catch (e) {
       emit(const ImageSelectedErrorState('Error in image Selection'));
+    }
+  }
+
+  void _editUser(EditUserEvent event, Emitter<RegisterState> emit) async {
+    emit(EditLoadingState());
+    try {
+      final editResponse = await registerRepository.edit(event.registerDto, event.path, event.idUser);
+      emit(EditSuccessState());
+    } on Exception catch (e) {
+      emit(EditErrorState(e.toString()));
     }
   }
 }

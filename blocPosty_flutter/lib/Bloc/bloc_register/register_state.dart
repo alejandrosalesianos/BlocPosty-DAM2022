@@ -39,3 +39,15 @@ class ImageSelectedErrorState extends RegisterState {
   @override
   List<Object> get props => [message];
 }
+class EditSuccessState extends RegisterState {}
+
+class EditErrorState extends RegisterState {
+  final String message;
+
+  const EditErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class EditLoadingState extends RegisterState {}

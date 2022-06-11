@@ -52,26 +52,15 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 10,
+                              width: 30,
                             ),
                             Text(
-                              "Search your notes",
+                              "Bloc Posty tu red social de blocs de notas",
                               style: TextStyle(
                                   fontSize: 15, color: white.withOpacity(0.7)),
                             )
                           ],
                         ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.grid_view,
-                              color: white.withOpacity(0.7),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        )
                       ],
                     ),
                   ),

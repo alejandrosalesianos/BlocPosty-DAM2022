@@ -70,31 +70,34 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   _buildBlocsUser(BuildContext context, List<BlocModel> blocs) {
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: StaggeredGridView.countBuilder(
-          staggeredTileBuilder: (int index) =>
-              index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
-          crossAxisCount: 4,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 3,
-          itemCount: blocs.length,
-          itemBuilder: (context, index) {
-            return Container(
-                margin: const EdgeInsets.only(right: 10, bottom: 10),
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: StaggeredGridView.countBuilder(
+            staggeredTileBuilder: (int index) =>
+                index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
+            crossAxisCount: 4,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 3,
+            itemCount: blocs.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: const EdgeInsets.only(right: 10, bottom: 10),
 
-                decoration: BoxDecoration(
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(0.7),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                width: 80,
-                height: 100,
-                child:
-                    buildBlocContent(blocs.elementAt(index), index));
-          },
-        ));
+                  decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(0.7),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  width: 80,
+                  height: 100,
+                  child:
+                      buildBlocContent(blocs.elementAt(index), index));
+            },
+          )),
+    );
   }
 
   buildBlocContent(BlocModel blocModel, int index) {

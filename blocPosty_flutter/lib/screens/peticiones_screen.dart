@@ -31,12 +31,12 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
           return PeticionBloc(peticionRepository)..add(FetchPeticionesEvent());
         },
         child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: 500,
+          height: 1000,
           child: _createPeticionesUser(context),
         ),
-      )),
-    );
+      ),
+    ));
   }
 
   _createPeticionesUser(BuildContext context) {
@@ -48,26 +48,28 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
       } else if (state is PeticionesFetched) {
         return _buildPeticiones(context, state.peticiones);
       } else {
-        return const Text('Fallo al cargar las peticiones');
+        return const Text('No se encuentran peticiones en este momento');
       }
     });
   }
 
   _buildPeticiones(BuildContext contexto, List<Peticiones> peticiones) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: ListView.builder(
-            itemCount: peticiones.length,
-            itemBuilder: (context, index) {
-              return Container(
-                width: 100,
-                height: 150,
-                child: _BuildOnePeticion(peticiones.elementAt(index), contexto),
-              );
-            }),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: ListView.builder(
+              itemCount: peticiones.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 100,
+                  height: 150,
+                  child: _BuildOnePeticion(peticiones.elementAt(index), contexto),
+                );
+              }),
+        ),
       ),
     );
   }
@@ -81,21 +83,21 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
           children: [
             Expanded(
               child: Container(
-                alignment: Alignment.topLeft,
                 child: Column(
                   children: [
                     Expanded(
                       child: ListTile(
                         title: Text(
                           peticion.mensaje,
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis),
+                          maxLines: 8,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              flex: 3,
+              flex: 5,
             ),
             const Center(
               child: Padding(
@@ -132,7 +134,7 @@ class _PeticionesScreenState extends State<PeticionesScreen> {
                           TextButton(
                             child: Text("Rechazar"),
                             onPressed: () {
-                              BlocProvider.of<PeticionBloc>(context)
+                              BlocProvider.of<PeticionBloc>(contexto)
                                   .add(DeclinePeticionEvent(peticion.id));
                               Navigator.pushNamed(context, '/menu');
                             },

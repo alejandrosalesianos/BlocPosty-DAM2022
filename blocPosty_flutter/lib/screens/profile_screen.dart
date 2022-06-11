@@ -6,6 +6,7 @@ import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository.dart';
 import 'package:flutter_bloc_posty/repository/user/user_repository_impl.dart';
 import 'package:flutter_bloc_posty/screens/peticiones_screen.dart';
+import 'dart:math' as math;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -74,7 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             return Container(
               margin: EdgeInsets.only(right: 10, bottom: 10),
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(0.7),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               width: 50,
               height: 80,
@@ -120,6 +122,12 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   _buildUserDetail(BuildContext context, MeResponse meResponse) {
+    var icon;
+    if(meResponse.perfil == 'PRIVADO'){
+      icon = Icons.lock;
+    }else{
+      icon = Icons.lock_open;
+    }
     return MaterialApp(
         home: Scaffold(
             backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -131,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Container(
                     child: Row(
                       children: [
-                        Icon(Icons.lock),
+                        Icon(icon),
                         SizedBox(width: 4.0),
                         Text(
                           meResponse.username,
@@ -246,50 +254,31 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         color: Color.fromARGB(255, 0, 0, 0))),
                               ])),
                       SizedBox(height: 12.0),
-                      Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                width: 350.0,
-                                height: 35.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                  border: Border.all(
-                                    width: 2.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                      GestureDetector(
+                        onTap: () {Navigator.pushNamed(context, '/editProf', arguments: meResponse);},
+                        child: Container(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 350.0,
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      width: 2.0,
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
                                   ),
+                                  child: Text("Editar Perfil",
+                                      style: TextStyle(
+                                          color: Color.fromARGB(255, 0, 0, 0))),
                                 ),
-                                child: Text("Editar Perfil",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0))),
-                              ),
-                              Icon(Icons.expand_more_outlined,
-                                  color: Color.fromARGB(255, 0, 0, 0))
-                            ]),
+                              ]),
+                        ),
                       ),
                       SizedBox(height: 24.0),
-                      Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 350.0,
-                                height: 35.0,
-                                child: Text("Blocs populares",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              Icon(Icons.expand_more_outlined,
-                                  color: Color.fromARGB(255, 0, 0, 0))
-                            ]),
-                      ),
-                      Divider(
-                        color: Colors.grey[800],
-                        thickness: 2.0,
-                      ),
                       SizedBox(
                         height: 70,
                         child: TabBar(
@@ -310,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                       ),
                       SizedBox(
-                        height: 230.0,
+                        height: 280.0,
                         child: TabBarView(
                           controller: tabController,
                           children: [
@@ -328,8 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
-                                child: PeticionesScreen(),
-                              ),
+                                child: PeticionesScreen()),
                           ],
                         ),
                       ),

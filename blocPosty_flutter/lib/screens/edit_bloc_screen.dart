@@ -24,10 +24,12 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
   late TextEditingController _contenidoController;
   late BlocRepository blocRepository;
   late CreateBlocDto createBlocDto;
+  late Future<SharedPreferences> _prefs;
 
   @override
   void initState() {
     super.initState();
+    _prefs = SharedPreferences.getInstance();
     WidgetsFlutterBinding.ensureInitialized();
     blocRepository = BlocRepositoryImpl();
     _tituloController = TextEditingController();
@@ -94,6 +96,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
     var args = ModalRoute.of(context)!.settings.arguments as Blocs?;
     var urlCache = '';
     var imageName = '';
+    var username;
     if (args!.multimedia.isNotEmpty) {
       imageName = args.multimedia.split("/")[4];
       urlCache = '/data/user/0/com.example.flutter_bloc_posty/cache/';
@@ -215,8 +218,12 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red)),
-                    onPressed: () {
-                      if (args.userName.contains('skyador')) {
+                    onPressed: () async {
+                      _prefs.then((SharedPreferences prefs) {
+                        username = prefs.getString("username");
+                        
+                        if (args.userName.contains(username)) {
+
                         BlocProvider.of<BlocBloc>(context)
                             .add(DeleteBlocEvent(args.id));
                       } else {
@@ -236,6 +243,8 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                               );
                             });
                       }
+                });
+                      
                     },
                     label:
                         Text('Borrar', style: TextStyle(color: Colors.white))),
@@ -256,6 +265,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
 
   Widget _buildEditBlocWithImage(BuildContext context, String path) {
     final args = ModalRoute.of(context)!.settings.arguments as Blocs?;
+    var username;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -357,8 +367,12 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red)),
-                    onPressed: () {
-                      if (args!.userName.contains('hola')) {
+                    onPressed: () async {
+                      _prefs.then((SharedPreferences prefs) {
+                        username = prefs.getString("username");
+
+                        if (args!.userName.contains(username)) {
+
                         BlocProvider.of<BlocBloc>(context)
                             .add(DeleteBlocEvent(args.id));
                       } else {
@@ -378,6 +392,8 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                               );
                             });
                       }
+                });
+                      
                     },
                     label:
                         Text('Borrar', style: TextStyle(color: Colors.white))),
