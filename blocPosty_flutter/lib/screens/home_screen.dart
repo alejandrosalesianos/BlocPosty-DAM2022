@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 15,
+              maxLines: 13,
             ),
           ),
         ],

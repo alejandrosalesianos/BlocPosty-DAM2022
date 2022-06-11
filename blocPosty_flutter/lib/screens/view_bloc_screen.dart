@@ -83,7 +83,7 @@ class _ViewBlocScreenState extends State<ViewBlocScreen> {
           } else if (state is BlocFollowErrorState) {
             showDialog(context: context, builder: (context) {
                   return AlertDialog(
-                    title: Text('Fallo al enviar la petición'),
+                    title: Text('No puedes seguirte a ti mismo'),
                     actions: [
                       TextButton(onPressed: () {Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const MenuScreen()));}, child: Text('OK'))
