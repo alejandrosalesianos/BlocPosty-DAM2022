@@ -42,10 +42,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController = TextEditingController();
     _repeatpasswordController = TextEditingController();
     _telefonoController = TextEditingController();
-    _userController.text = "Vicente";
-    _emailController.text = "V@Gmail.com";
-    _passwordController.text = "Pingo123";
-    _repeatpasswordController.text = "Pingo123";
   }
 
   @override
@@ -275,22 +271,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: const Divider(
                         height: 60,
                         thickness: 3,
-                      ),
-                    ),
-                    Text(
-                      'O inicia sesión desde una cuenta de Google\n',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 85),
-                      child: Row(
-                        children: [
-                          SignInButton(
-                            Buttons.Google,
-                            onPressed: () {},
-                            text: "Iniciar Sesión con Google",
-                          ),
-                        ],
                       ),
                     ),
                     const Center(
