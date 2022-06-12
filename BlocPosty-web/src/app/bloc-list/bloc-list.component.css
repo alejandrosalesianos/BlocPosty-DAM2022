@@ -1,0 +1,11 @@
+.example-container {
+    height: fit-content;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  img {
+    padding-right: 5px;
+  }
