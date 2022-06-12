@@ -269,6 +269,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
 
   Widget _buildEditBlocWithImage(BuildContext context, String path) {
     final args = ModalRoute.of(context)!.settings.arguments as Blocs?;
+        var role;
     var username;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -374,8 +375,9 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     onPressed: () async {
                       _prefs.then((SharedPreferences prefs) {
                         username = prefs.getString("username");
-
-                        if (args!.userName.contains(username)) {
+                        role = prefs.getString("role");
+                        
+                        if (args!.userName.contains(username) || role == "ADMIN") {
 
                         BlocProvider.of<BlocBloc>(context)
                             .add(DeleteBlocEvent(args.id));
