@@ -4,14 +4,14 @@ class LoginResponse {
     required this.username,
     required this.avatar,
     required this.perfil,
-     this.role,
+    required this.role,
     required this.token,
   });
   late final String email;
   late final String username;
   late final String avatar;
   late final String perfil;
-  late final Null role;
+  late final String role;
   late final String token;
   
   LoginResponse.fromJson(Map<String, dynamic> json){
@@ -19,7 +19,7 @@ class LoginResponse {
     username = json['username'];
     avatar = json['avatar'];
     perfil = json['perfil'];
-    role = null;
+    role = json['role'];
     token = json['token'];
   }
 

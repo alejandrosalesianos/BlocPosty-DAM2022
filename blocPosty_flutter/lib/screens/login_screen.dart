@@ -183,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefs.setString("token", state.loginResponse.token);
                   prefs.setString("avatar", state.loginResponse.avatar);
                   prefs.setString("username", state.loginResponse.username);
+                  prefs.setString("role", state.loginResponse.role);
                 });
                 Navigator.push(
                     context,

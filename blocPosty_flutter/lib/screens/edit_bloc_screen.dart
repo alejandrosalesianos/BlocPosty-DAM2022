@@ -96,6 +96,7 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
     var args = ModalRoute.of(context)!.settings.arguments as Blocs?;
     var urlCache = '';
     var imageName = '';
+    var role;
     var username;
     if (args!.multimedia.isNotEmpty) {
       imageName = args.multimedia.split("/")[4];
@@ -121,6 +122,8 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                                 child: Text('No')),
                             TextButton(
                                 onPressed: () {
+                                  imageName = '';
+                                  urlCache = '';
                                   Navigator.pop(context);
                                 },
                                 child: Text('Si'))
@@ -221,8 +224,9 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     onPressed: () async {
                       _prefs.then((SharedPreferences prefs) {
                         username = prefs.getString("username");
+                        role = prefs.getString("role");
                         
-                        if (args.userName.contains(username)) {
+                        if (args.userName.contains(username) || role == "ADMIN") {
 
                         BlocProvider.of<BlocBloc>(context)
                             .add(DeleteBlocEvent(args.id));
@@ -397,13 +401,6 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                     },
                     label:
                         Text('Borrar', style: TextStyle(color: Colors.white))),
-                TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue[700])),
-                    onPressed: () {},
-                    child:
-                        Text('Seguir', style: TextStyle(color: Colors.white))),
               ],
             ),
           ],
