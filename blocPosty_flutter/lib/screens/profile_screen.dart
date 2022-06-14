@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         '${user.blocs.elementAt(index).contenido}',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 8,
+                        maxLines: 6,
                       ),
                     ),
                   ],
@@ -160,13 +160,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.add_box_outlined),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.menu),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.popAndPushNamed(context, '/login');
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(Icons.logout),
+                            ),
                           )
                         ],
                       ))
@@ -280,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       SizedBox(height: 24.0),
                       SizedBox(
-                        height: 70,
+                        height: 120,
                         child: TabBar(
                           indicatorColor: Colors.grey,
                           controller: tabController,

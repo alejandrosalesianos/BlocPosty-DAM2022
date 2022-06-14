@@ -271,17 +271,44 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
     final args = ModalRoute.of(context)!.settings.arguments as Blocs?;
         var role;
     var username;
+        var urlCache = '';
+    var imageName = '';
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: 400,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: FileImage(File(path)), fit: BoxFit.fill)),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('¿Quiere borrar la imagen actual?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('No')),
+                            TextButton(
+                                onPressed: () {
+                                  imageName = '';
+                                  urlCache = '';
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Si'))
+                          ],
+                        );
+                      });
+              },
+              child: Container(
+                width: 400,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: FileImage(File(path)), fit: BoxFit.fill)),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 10),
@@ -331,13 +358,6 @@ class _EditBlocScreenState extends State<EditBlocScreen> {
                         backgroundColor:
                             MaterialStateProperty.all(Colors.grey)),
                     onPressed: () {
-                      /*showDialog(context: context, builder: (context) {
-                  return AlertDialog(
-                    title: Text('No puedes añadir Fotos si no eres usuario en este bloc ${args?.multimedia}'),
-                    actions: [
-                      TextButton(onPressed: () {Navigator.pop(context);}, child: Text('OK'))
-                  ],);
-                });*/
                       BlocProvider.of<BlocBloc>(context)
                           .add(const SelectImageEvent(ImageSource.gallery));
                     },

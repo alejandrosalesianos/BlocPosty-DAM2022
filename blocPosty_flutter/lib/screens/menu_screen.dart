@@ -54,7 +54,7 @@ class _MenuScreenState extends State<MenuScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.notifications,
+              Icons.home,
               color: bgColor,
             ),
             label: 'Home',
