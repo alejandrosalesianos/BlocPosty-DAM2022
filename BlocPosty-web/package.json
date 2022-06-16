@@ -1,5 +1,5 @@
 {
-  "name": "miarm-app",
+  "name": "bloc-posty",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.9",
-    "@angular/cli": "~12.2.9",
-    "@angular/compiler-cli": "~12.2.0",
+    "@angular/cli": "^14.0.2",
+    "@angular/compiler-cli": "^12.2.16",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
