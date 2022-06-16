@@ -23,7 +23,6 @@ export class BlocService {
     return this.http.get<BlocResponse>(`${environment.apiBaseUrl}/bloc/`, DEFAULT_HEADERS)
   }
   deletePost(id:Number) {
-    console.log(token)
     return this.http.delete(`${environment.apiBaseUrl}/bloc/${id}`,DEFAULT_HEADERS)
   }
 }

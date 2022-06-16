@@ -41,5 +41,10 @@ export class BlocListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  deleteBloc(bloc:Bloc ){
+    this.blocService.deletePost(bloc.id).subscribe(results => {
+      console.log('Bloc Borrado')
+    })
+  }
 
 }
