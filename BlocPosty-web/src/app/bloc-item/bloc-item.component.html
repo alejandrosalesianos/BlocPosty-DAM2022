@@ -6,7 +6,7 @@
         <img [src]="getAvatarImage(blocInput)" class="avatar" alt="avatar">
       </div>
     </mat-card-header>
-    <img mat-card-image [src]="getPostImage(blocInput)" alt="Post" width="300" height="300">
+    <img *ngIf="blocInput.userImg" mat-card-image [src]="getPostImage(blocInput)" alt="Post" width="300" height="300">
     <mat-card-content>
       <p>
           {{blocInput.contenido}}

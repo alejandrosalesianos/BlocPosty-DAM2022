@@ -1,12 +1,17 @@
 {
-  "name": "miarm-app",
+  "name": "bloc-posty",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "heroku-postbuild": "ng build --prod"
+  },
+  "engines": {
+    "node": "14.18.0",
+    "npm": "6.14.5"
   },
   "private": true,
   "dependencies": {
@@ -24,12 +29,13 @@
     "cdk": "^2.15.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "@angular/cli": "~12.2.9",
+    "@angular/compiler-cli": "~12.2.0",
+    "typescript": "~4.3.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.9",
-    "@angular/cli": "~12.2.9",
-    "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
@@ -37,7 +43,6 @@
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.3.5"
+    "karma-jasmine-html-reporter": "~1.7.0"
   }
 }

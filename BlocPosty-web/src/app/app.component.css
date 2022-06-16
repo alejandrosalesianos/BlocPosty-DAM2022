@@ -1,0 +1,10 @@
+.sidenav-menu{
+    position: relative;
+    align-items: center;
+    width: 200px;
+}
+html, body {
+    background-size: 100% ;
+    background-size: cover;
+    background-color: #303030;
+  }
