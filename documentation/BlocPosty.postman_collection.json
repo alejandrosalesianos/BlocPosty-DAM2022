@@ -190,12 +190,7 @@
 									"type": "file",
 									"src": "/C:/Users/ALEJANDRO/OneDrive/Escritorio/OwO/BlocPosty-DAM2022/json/Bloc.json"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "https://bloc-posty.herokuapp.com/bloc/",
@@ -397,11 +392,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/peticion/32",
+							"raw": "https://bloc-posty.herokuapp.com/peticion/32",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"bloc-posty",
+								"herokuapp",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"peticion",
 								"32"
