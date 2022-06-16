@@ -44,6 +44,7 @@ export class BlocListComponent implements OnInit {
   deleteBloc(bloc:Bloc ){
     this.blocService.deletePost(bloc.id).subscribe(results => {
       console.log('Bloc Borrado')
+      window.location.reload();
     })
   }
 
