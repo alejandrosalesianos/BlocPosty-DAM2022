@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_posty/Bloc/bloc_bloc/bloc_bloc.dart';
 import 'package:flutter_bloc_posty/model/bloc_model/all_blocs_response.dart';
+import 'package:flutter_bloc_posty/model/user/me_response.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository.dart';
 import 'package:flutter_bloc_posty/repository/bloc/bloc_repository_impl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -36,6 +37,11 @@ class _SearchScreenState extends State<SearchScreen> {
           width: MediaQuery.of(context).size.width - 50,
           height: 50,
           child: TextField(
+            onSubmitted: (value) {
+              setState(() {
+                _searchController.text = value;
+              });
+            },
             controller: _searchController,
             decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
@@ -70,34 +76,48 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   _buildBlocsUser(BuildContext context, List<BlocModel> blocs) {
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: StaggeredGridView.countBuilder(
-          staggeredTileBuilder: (int index) =>
-              index % 7 == 0 ? StaggeredTile.count(2, 2) : StaggeredTile.fit(1),
-          crossAxisCount: 4,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 3,
-          itemCount: blocs.length,
-          itemBuilder: (context, index) {
-            return Container(
-                margin: const EdgeInsets.only(right: 10, bottom: 10),
-                decoration: BoxDecoration(
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(0.7),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                width: 80,
-                height: 100,
-                child: buildBlocContent(blocs.elementAt(index), index));
-          },
-        ));
+    if(_searchController.text.isEmpty){
+      return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: StaggeredGridView.countBuilder(
+            staggeredTileBuilder: (int index) =>
+                index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
+            crossAxisCount: 4,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 3,
+            itemCount: blocs.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: const EdgeInsets.only(right: 10, bottom: 10),
+
+                  decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(0.7),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  width: 80,
+                  height: 100,
+                  child:
+                      buildBlocContent(blocs.elementAt(index), index));
+            },
+          )),
+    );
+    } else{
+return getCategoryList(blocs, _searchController.text);
+    }
+    
   }
 
   buildBlocContent(BlocModel blocModel, int index) {
     if (index % 7 == 0 && blocModel.multimedia.isNotEmpty) {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -107,19 +127,23 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+              maxLines: 7,
             ),
           ),
         ],
-      );
+      ));
     }
     if (index % 7 == 0) {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -129,18 +153,22 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 8,
+              maxLines: 12,
             ),
           ),
         ],
-      );
+      ));
     } else {
-      return Column(
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/view', arguments: blocModel);
+        },
+        child: Column(
         children: [
           getImgBloc(context, blocModel, index),
           Text(
@@ -150,7 +178,7 @@ class _SearchScreenState extends State<SearchScreen> {
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10,left: 2,right: 2),
             child: Text(
               '${blocModel.contenido}',
               textAlign: TextAlign.center,
@@ -159,7 +187,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ],
-      );
+      ));
     }
   }
 
@@ -167,13 +195,48 @@ class _SearchScreenState extends State<SearchScreen> {
     if (bloc.multimedia.isEmpty) {
       return Text('');
     } else if (index % 7 == 0) {
-      return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 100,
-        child: Image.network('${bloc.multimedia}'),
+      return Padding(
+        padding: const EdgeInsets.only(top: 10,bottom: 10),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 100,
+          child: Image.network('${bloc.multimedia}'),
+        ),
       );
     } else {
       return Text('');
     }
+  }
+
+  Widget getCategoryList(List<BlocModel> blocs, String busqueda) {
+    List outputList = blocs.where((b) => b.titulo.contains(busqueda)).toList();
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: StaggeredGridView.countBuilder(
+            staggeredTileBuilder: (int index) =>
+                index % 7 == 0 ? StaggeredTile.count(2, 3) : StaggeredTile.fit(2),
+            crossAxisCount: 4,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 3,
+            itemCount: outputList.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: const EdgeInsets.only(right: 10, bottom: 10),
+
+                  decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(0.7),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  width: 80,
+                  height: 100,
+                  child:
+                      buildBlocContent(outputList.elementAt(index), index));
+            },
+          )),
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_bloc_posty/model/register_response.dart';
 import 'package:flutter_bloc_posty/model/register_dto.dart';
 import 'package:flutter_bloc_posty/repository/register/register_repository.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterRepositoryImpl extends RegisterRepository{
   
@@ -30,6 +31,44 @@ class RegisterRepositoryImpl extends RegisterRepository{
     final request = http.MultipartRequest('POST',uri)
       ..files.add(http.MultipartFile.fromString('user', body,contentType: MediaType('application','json')))
       ..files.add(await http.MultipartFile.fromPath('file', filePath))
+      ..headers.addAll(headers);
+
+      final res = await request.send();
+
+      final responded = await http.Response.fromStream(res);
+
+      if (res.statusCode == 201) {
+        return RegisterResponse.fromJson(json.decode(responded.body));
+      } else {
+        throw Exception('Fail to register');
+      }
+  }
+
+  @override
+  Future<RegisterResponse> edit(RegisterDto registerDto, String filepath, String idUser) async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    
+    Map<String,String> headers = {
+      'Content-Type':'multipart/form-data',
+      'Authorization': 'Bearer ${token}',
+    };
+
+    final uri = Uri.parse('${ApiConstants.apiBaseUrl}user/${idUser}');
+
+    final body = jsonEncode({
+      'username': registerDto.username,
+      'email':registerDto.email,
+      'telefono':registerDto.telefono,
+      'perfil':registerDto.perfil,
+      'permisos':'USER',
+      'password':registerDto.password,
+      'password2':registerDto.password2
+    });
+
+    final request = http.MultipartRequest('PUT',uri)
+      ..files.add(http.MultipartFile.fromString('user', body,contentType: MediaType('application','json')))
+      ..files.add(await http.MultipartFile.fromPath('file', filepath))
       ..headers.addAll(headers);
 
       final res = await request.send();

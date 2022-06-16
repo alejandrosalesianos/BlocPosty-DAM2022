@@ -25,3 +25,13 @@ class SaveUserEvent extends RegisterEvent {
   @override
   List<Object> get props => [registerDto,path];
 }
+class EditUserEvent extends RegisterEvent {
+  final RegisterDto registerDto;
+  final String path;
+  final String idUser;
+
+  const EditUserEvent(this.registerDto, this.path,this.idUser);
+
+  @override
+  List<Object> get props => [registerDto,path,idUser];
+}

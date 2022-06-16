@@ -2,7 +2,7 @@ part of 'bloc_bloc.dart';
 
 abstract class BlocState extends Equatable {
   const BlocState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -26,3 +26,41 @@ class BlocFetchError extends BlocState {
   @override
   List<Object> get props => [message];
 }
+
+class BlocSaveLoadingState extends BlocState {}
+
+class BlocSuccessState extends BlocState {}
+
+class BlocErrorState extends BlocState {
+  final String message;
+
+  const BlocErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class BlocEditingLoadingState extends BlocState{}
+
+class BlocEditingSuccessState extends BlocState{}
+
+class ImageSelectedSuccessState extends BlocState {
+  final XFile selectedFile;
+
+  const ImageSelectedSuccessState(this.selectedFile);
+
+  @override
+  List<Object> get props => [selectedFile];
+}
+
+class ImageSelectedErrorState extends BlocState {
+  final String message;
+
+  const ImageSelectedErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+class BlocDeleteLoadingState extends BlocState{}
+
+class BlocDeleteSuccessState extends BlocState{}
